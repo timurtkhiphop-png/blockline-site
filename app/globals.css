@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --cyan: #00d4b8;
+  --cyan-08: rgba(0, 212, 184, 0.08);
+  --cyan-15: rgba(0, 212, 184, 0.15);
+  --cyan-40: rgba(0, 212, 184, 0.4);
+
+  --bg-0: #020c0c;
+  --bg-1: #060f0f;
+  --bg-2: #0c1a1a;
+  --bg-3: #112020;
+
+  --t-0: #ffffff;
+  --t-1: #c8dbd8;
+  --t-2: #6b8e8a;
+  --t-3: #2e4d4a;
+
+  --line: rgba(0, 212, 184, 0.1);
+  --line-bright: rgba(0, 212, 184, 0.25);
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Unbounded", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --accent: #00d4b8;
+}
+
+html,
+body {
+  background: var(--bg-1);
+  color: var(--t-1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Кастомное кольцо в герое; системный курсор скрываем только пока смонтирован hero с lab */
+body.lab-hero-cursor,
+body.lab-hero-cursor a,
+body.lab-hero-cursor button {
+  cursor: none !important;
+}
+
+::selection {
+  background: rgba(0, 212, 184, 0.28);
+  color: #f8fafc;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-1);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.35);
+}
+
+.text-cyan {
+  color: var(--cyan);
+}
+.bg-surface-0 {
+  background: var(--bg-0);
+}
+.bg-surface-1 {
+  background: var(--bg-1);
+}
+.bg-surface-2 {
+  background: var(--bg-2);
+}
+.border-line {
+  border-color: var(--line);
+}
+
+.section-label {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::after {
+  content: "";
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--cyan);
+  opacity: 0.4;
+}
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
+    mask-image: linear-gradient(to bottom, #000 70%, transparent);
+  }
+  .mask-fade-r {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 10%,
+      #000 90%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 10%,
+      #000 90%,
+      transparent
+    );
+  }
+  .grid-bg {
+    background-image: linear-gradient(
+        rgba(148, 163, 184, 0.05) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        rgba(148, 163, 184, 0.05) 1px,
+        transparent 1px
+      );
+    background-size: 48px 48px;
+    background-position: -1px -1px;
+  }
+  .text-stroke {
+    -webkit-text-stroke: 1px rgba(248, 250, 252, 0.35);
+    color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Герой H1: плотный градиент #fff → #00F2FF; лёгкий контур морской глубины + мягкое ледяное свечение */
+.hero-headline-gradient {
+  color: transparent;
+  background-image: linear-gradient(
+    165deg,
+    #ffffff 0%,
+    #f4fbff 12%,
+    #b8ecfa 38%,
+    #33e2ff 68%,
+    #00e5ff 88%,
+    #00f2ff 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 0 24px rgba(0, 242, 255, 0.12);
+  filter: drop-shadow(0 0.5px 1.5px rgba(8, 42, 52, 0.45))
+    drop-shadow(0 0 18px rgba(0, 242, 255, 0.22))
+    drop-shadow(0 0 36px rgba(165, 243, 252, 0.14));
+}
+
+.hero-readability-vignette {
+  background: radial-gradient(
+    ellipse 65% 75% at 50% 48%,
+    rgba(2, 12, 12, 0.6) 0%,
+    rgba(2, 12, 12, 0.25) 45%,
+    transparent 100%
+  );
+}

@@ -1,0 +1,84 @@
+8:20 Lab — выкладка на Timeweb (Node.js, не статика)
+=====================================================
+
+У сайта есть API /api/lead (Telegram). Нужен хостинг с Node.js 20+.
+
+0) Если большой архив out/ не заливается / не распаковывается / сайт пустой — НАДЁЖНЫЙ СПОСОБ
+   ---------------------------------------------------------------------------
+   Не заливай готовый out (там тысячи файлов и node_modules) — панель и FTP часто
+   обрывают или распаковывают с ошибкой.
+
+   Локально (PowerShell в корне проекта):
+
+     npm run source:pack
+
+   Получишь небольшой файл blockline-source.tar.gz (без node_modules и без .next).
+   Залей его по SFTP (WinSCP / FileZilla) в каталог сайта на сервере.
+
+   На сервере по SSH (путь подставь свой):
+
+     cd ~/path/to/site
+     tar -xzf blockline-source.tar.gz
+     npm ci
+     npm run build
+     export NODE_ENV=production
+     export PORT=3000
+     npm run start
+
+   Или через PM2 (из того же каталога):
+
+     pm2 start npm --name blockline -- run start
+
+   Переменные TELEGRAM_* задай в панели или в файле .env в этом каталоге (Next подхватит при старте).
+
+   Плюс: сборка идёт на Linux — не будет проблем с sharp и обрезанными файлами.
+
+1) Собрать архив для загрузки
+   В корне проекта (PowerShell):
+
+     npm run out
+     npm run out:zip
+
+   Появится папка out/ и файл blockline-upload.zip.
+   Если панель пишет «ошибка при распаковке»:
+     npm run out:tar
+   и залей blockline-upload.tar.gz — у Timeweb он тоже поддерживается; часто работает, когда zip с Windows ломается.
+
+   (Скрипт out:zip теперь собирает zip через tar.exe — совместимее, чем старый Compress-Archive.)
+   Заливать на сервер удобнее ОДИН zip (FTP по тысячам мелких файлов часто «висит»),
+   на сервере распакуй так, чтобы server.js лежал в корне каталога приложения.
+
+   Внутри будет server.js, node_modules (урезанный), public/, .next/static/.
+
+   Если в панели хостинга «зависает на 2–5%»:
+   - не заливай папку out по файлам через браузер / «файловый менеджер»;
+   - залей один файл blockline-upload.zip через SFTP (WinSCP, FileZilla) или встроенный SFTP в Timeweb;
+   - на сервере распакуй архив (в панели «Распаковать» или по SSH: unzip …).
+   Веб-загрузчик одного большого zip тоже иногда обрывает — тогда только SFTP.
+
+2) Переменные окружения (в панели Timeweb или .env рядом с server.js)
+
+     NODE_ENV=production
+     PORT=3000
+     TELEGRAM_BOT_TOKEN=...
+     TELEGRAM_CHAT_ID=...
+
+3) Запуск
+
+     node server.js
+
+   Или через PM2:
+
+     pm2 start server.js --name blockline
+
+   Порт должен совпадать с тем, что проксирует nginx/панель (часто 3000).
+
+4) Если заливаешь не bundle, а репозиторий
+
+     npm ci
+     npm run build
+     Затем вручную скопируй .next/static -> .next/standalone/.next/static
+     и public -> .next/standalone/public (как в scripts/prepare-timeweb.ps1),
+     и запускай node .next/standalone/server.js из каталога standalone.
+
+5) Чисто статический хостинг (без Node) этот проект не подойдёт из-за /api/lead.

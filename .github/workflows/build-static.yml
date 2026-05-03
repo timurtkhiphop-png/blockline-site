@@ -1,0 +1,42 @@
+name: Static export (out)
+
+on:
+  workflow_dispatch:
+    inputs:
+      lite:
+        description: "Lite-сборка без WebGL (если полная падает по таймауту)"
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - run: npm ci
+
+      - name: next build
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+          NODE_OPTIONS: --max-old-space-size=8192
+        run: |
+          LITE="${{ inputs.lite }}"
+          if [ "$LITE" = "true" ]; then
+            echo ">>> lite (no WebGL chunk)"
+            npm run build
+          else
+            echo ">>> full (WebGL + Three.js)"
+            npm run build:full
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: out
+          path: out/
