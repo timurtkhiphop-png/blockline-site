@@ -1,40 +1,36 @@
-# blockline — сайт Тимура Темирова
+# blockline-site — лендинг 8:20 Lab
 
-Одностраничный Next.js 15 / React 19 / Tailwind / Framer Motion. Тёмная эстетика, зерно, mesh-градиент, скролл-хореография, магнитные кнопки, split-reveal.
+Next.js 15 (App Router), React 19, Tailwind, статический экспорт в папку `out/` для загрузки на хостинг.
 
-## Запуск
+## Запуск разработки
 
-```powershell
-cd C:\Users\Marke\Desktop\blockline-site
+```bash
+cd путь/к/blockline-site
 npm install
 npm run dev
 ```
 
-Открыть <http://localhost:3000>.
+Сайт: **http://localhost:3010** (порт задан в `package.json`).
 
-## Сборка
+## Сборка для продакшена
 
-```powershell
+```bash
 npm run build
-npm run start
 ```
 
-## Форма контакта
+Готовые файлы — в **`out/`**. Их содержимое загружается в корень сайта на хостинге.
 
-Форма шлёт POST на `/api/lead`. По умолчанию ответ в логе сервера.
-Чтобы заявки падали в Telegram — скопируй `.env.example` в `.env.local`
-и заполни `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID`.
+Другие сценарии: `npm run build:full`, `npm run build:clean`, упаковка — см. `package.json` и `TIMWEB-DEPLOY.txt`.
 
-## Что где лежит
+## Где править тексты
 
-- `app/page.tsx` — сборка экранов
-- `app/layout.tsx` — шрифты, мета, фоновые слои
-- `app/globals.css` — базовые стили, переменные, grain
-- `components/` — все секции, интерактивные примитивы
-- `lib/motion.ts` — общие motion-варианты
-- `lib/content.ts` — все тексты в одном месте, редактируй там
+- **`lib/siteCopy.ts`** — секции лендинга (навигация, услуги, цены, FAQ, контакты и т.д.).
+- **`lib/content.ts`** — герой и связанный контент.
 
-## Подмена контента
+## Структура
 
-Тексты, список услуг, кейсов, принципов и шагов процесса — в `lib/content.ts`.
-Меняешь там — меняется на всём сайте.
+- `app/` — страницы, layout, глобальные стили
+- `components/` — секции и UI
+- `hooks/` — клиентские хуки (например анимации)
+- `src/components/` — часть кода (динамический импорт из корня `components/`)
+- `public/` — статика (`cases/`, медиа, шрифты)

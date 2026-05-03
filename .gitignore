@@ -23,6 +23,7 @@
 blockline-upload.zip
 blockline-upload.tar.gz
 blockline-source.tar.gz
+dev.log
 *.pem
 
 # debug
