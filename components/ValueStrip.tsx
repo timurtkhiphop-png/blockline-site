@@ -1,29 +1,54 @@
 import { metrics } from "@/lib/siteCopy";
 
-/** Совпадает с логикой анимации: суффикс после цифр, для «14 дн» — пробел перед «дн». */
-function counterKey(m: (typeof metrics)[number]) {
-  return m.unit ? `${m.value} ${m.unit}` : m.value;
+function counterAttr(m: (typeof metrics)[number]) {
+  return `${m.value}${m.suffix}`;
+}
+
+/** Число анимируется отдельно (data-counter); суффикс (+, дн) — компактным кеглем. */
+function MetricFigure({ m }: { m: (typeof metrics)[number] }) {
+  const digitBlock = (
+    <span
+      data-counter={String(m.value)}
+      style={{ fontFamily: "var(--font-section-display), sans-serif" }}
+      className="inline-block shrink-0 tabular-nums text-[clamp(36px,6.5vw,64px)] font-normal leading-none tracking-[0.02em] md:text-[clamp(42px,5vw,72px)] lab-accent-text"
+    >
+      {m.value}
+    </span>
+  );
+
+  if (!m.suffix) return digitBlock;
+
+  return (
+    <span className="inline-flex shrink-0 items-baseline gap-[0.15em] whitespace-nowrap">
+      {digitBlock}
+      <span
+        style={{ fontFamily: "var(--font-mono)" }}
+        className="translate-y-[-0.05em] text-[clamp(13px,2vw,17px)] font-medium tracking-[0.06em] opacity-90 lab-accent-text"
+      >
+        {m.suffix}
+      </span>
+    </span>
+  );
 }
 
 export function ValueStrip() {
   return (
-    <div className="border-y border-[rgba(0,212,184,0.1)] bg-[#060f0f]">
-      <div className="mx-auto flex max-w-[1280px] flex-col divide-y divide-[rgba(0,212,184,0.1)] px-6 md:flex-row md:divide-x md:divide-y-0 md:px-12 xl:px-20">
+    <div className="border-y border-[var(--site-border)] bg-[var(--site-surface)]">
+      <div className="mx-auto flex max-w-[1280px] flex-col divide-y divide-[var(--site-border)] px-6 md:flex-row md:divide-x md:divide-y-0 md:px-12 xl:px-[48px]">
         {metrics.map((m) => (
           <div
-            key={counterKey(m)}
-            className="flex flex-1 items-center gap-5 px-8 py-6 md:h-[88px] md:py-0"
+            key={counterAttr(m)}
+            className="flex flex-1 flex-col gap-4 py-8 sm:flex-row sm:items-center sm:gap-5 md:min-h-[96px] md:py-6 md:pl-6 md:pr-6 lg:pl-8 lg:pr-8"
           >
-            <span
-              data-counter={counterKey(m)}
-              style={{ fontFamily: "var(--font-display), sans-serif" }}
-              className="text-[40px] font-black leading-none tracking-[-0.04em] text-[#00d4b8]"
-            >
-              {counterKey(m)}
-            </span>
-            <div className="min-w-0 max-w-[200px] text-[13px] leading-[1.4] text-[#6b8e8a]">
-              <span className="block font-medium text-[#c8dbd8]">{m.label}</span>
-              <span className="block text-[#6b8e8a]">{m.sub}</span>
+            <MetricFigure m={m} />
+            <div className="min-w-0 flex-1 sm:max-w-[min(100%,220px)]">
+              <span
+                style={{ fontFamily: "var(--font-mono)" }}
+                className="mb-1 block text-[11px] uppercase tracking-[0.15em] text-[var(--site-muted)]"
+              >
+                {m.label}
+              </span>
+              <span className="block text-[13px] leading-snug text-[var(--site-muted)]">{m.sub}</span>
             </div>
           </div>
         ))}

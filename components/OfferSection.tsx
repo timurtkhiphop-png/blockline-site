@@ -1,86 +1,68 @@
-import { offer, offerCards, type OfferCard } from "@/lib/siteCopy";
-
-function CardIcon({ id }: { id: OfferCard["id"] }) {
-  if (id === "web") {
-    return (
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#00d4b8" strokeWidth="1.5" aria-hidden>
-        <rect x="3" y="5" width="26" height="18" rx="2" />
-        <rect x="7" y="9" width="18" height="10" rx="1" strokeOpacity=".5" />
-        <line x1="11" y1="27" x2="21" y2="27" />
-        <line x1="16" y1="23" x2="16" y2="27" />
-      </svg>
-    );
-  }
-  if (id === "visual") {
-    return (
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#00d4b8" strokeWidth="1.5" aria-hidden>
-        <circle cx="16" cy="16" r="11" />
-        <circle cx="16" cy="16" r="4" strokeOpacity=".5" />
-        <line x1="16" y1="5" x2="16" y2="8" />
-        <line x1="16" y1="24" x2="16" y2="27" />
-      </svg>
-    );
-  }
-  return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#00d4b8" strokeWidth="1.5" aria-hidden>
-      <circle cx="16" cy="6" r="3" />
-      <circle cx="6" cy="24" r="3" />
-      <circle cx="26" cy="24" r="3" />
-      <line x1="16" y1="9" x2="9" y2="21" strokeOpacity=".5" />
-      <line x1="16" y1="9" x2="23" y2="21" strokeOpacity=".5" />
-      <line x1="9" y1="24" x2="23" y2="24" strokeOpacity=".5" />
-    </svg>
-  );
-}
+import { offer, offerCards } from "@/lib/siteCopy";
 
 export function OfferSection() {
   const [titleL1, titleL2] = offer.title.split("\n");
 
   return (
-    <section id="product" className="relative scroll-mt-24 bg-[#0c1a1a] px-6 py-24 md:px-12 md:py-32 xl:px-20">
+    <section id="product" className="relative scroll-mt-24 bg-[var(--site-surface)] px-6 py-24 md:px-12 md:py-32 xl:px-[48px]">
       <div className="mx-auto max-w-[1280px]">
         <div className="mb-10 hidden items-center gap-3 md:flex">
-          <div className="h-px w-8 bg-[rgba(0,212,184,0.35)]" />
+          <div className="lab-accent-rule shrink-0" />
           <span className="section-label">{offer.label}</span>
         </div>
         <div className="mb-10 md:hidden">
           <span className="section-label">{offer.label}</span>
         </div>
 
-        <div data-reveal className="mb-8">
+        <div data-reveal className="mb-12">
           <h2
-            style={{ fontFamily: "var(--font-display), sans-serif" }}
-            className="max-w-[560px] text-[clamp(32px,4vw,56px)] font-black leading-[1.05] tracking-[-0.03em] text-white"
+            style={{ fontFamily: "var(--font-section-display), sans-serif" }}
+            className="max-w-[720px] text-[clamp(32px,8vw,56px)] font-normal uppercase leading-[1.02] tracking-[0.02em] text-[var(--site-text)] md:text-[clamp(48px,6vw,96px)]"
           >
             {titleL1}
             <br />
-            <span className="text-[#00d4b8]">{titleL2}</span>
+            <span className="lab-accent-text">{titleL2}</span>
           </h2>
-          <p className="mt-6 max-w-[640px] text-[15px] leading-[1.65] text-[#6b8e8a]">{offer.sub}</p>
+          <p className="mt-6 max-w-[640px] text-[15px] leading-relaxed text-[var(--site-muted)]">{offer.sub}</p>
         </div>
 
-        <div className="grid grid-cols-1 gap-px border border-[rgba(0,212,184,0.08)] bg-[rgba(0,212,184,0.08)] md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {offerCards.map((card) => (
             <div
-              key={card.id}
-              className="group cursor-default bg-[#0c1a1a] p-10 transition-colors duration-300 hover:bg-[#112020]"
+              key={card.num}
+              data-reveal
+              className="group relative min-w-0 overflow-hidden rounded-[2px] border border-[var(--site-border)] bg-[var(--site-surface)] p-8 transition-all duration-300 hover:-translate-y-1 lab-accent-border-hover md:p-9"
             >
-              <div className="mb-7 text-[10px] font-medium tracking-[0.18em] text-[#2e4d4a]">{card.label}</div>
-              <div className="mb-5">
-                <CardIcon id={card.id} />
+              <div className="mb-8 flex min-w-0 items-start justify-between gap-3">
+                <span
+                  style={{ fontFamily: "var(--font-mono)" }}
+                  className="min-w-0 flex-1 text-balance break-words text-[10px] uppercase leading-snug tracking-[0.14em] text-[var(--site-muted)]"
+                >
+                  {card.category}
+                </span>
+                <span
+                  style={{ fontFamily: "var(--font-section-display), sans-serif" }}
+                  className="pointer-events-none shrink-0 text-[80px] leading-none text-[var(--site-text)] opacity-[0.05] transition-opacity duration-300 group-hover:opacity-[0.12]"
+                  aria-hidden
+                >
+                  {card.num}
+                </span>
               </div>
               <h3
-                style={{ fontFamily: "var(--font-display), sans-serif" }}
-                className="mb-4 text-[18px] font-bold leading-[1.2] tracking-[-0.02em] text-white"
+                style={{ fontFamily: "var(--font-section-display), sans-serif" }}
+                className="mb-4 max-w-full break-words text-[clamp(26px,4vw,36px)] font-normal uppercase leading-[1.05] tracking-[0.02em] text-[var(--site-text)]"
               >
                 {card.heading}
               </h3>
-              <p className="mb-6 text-[14px] leading-[1.7] text-[#6b8e8a]">{card.body}</p>
-              <div className="flex flex-wrap gap-2">
+              <p className="mb-7 min-w-0 text-pretty break-words text-[15px] leading-relaxed text-[var(--site-muted)]">
+                {card.body}
+              </p>
+              <div className="flex min-w-0 flex-wrap gap-2">
                 {card.tags.map((t) => (
                   <span
                     key={t}
-                    className="rounded-sm border border-[rgba(0,212,184,0.2)] px-2.5 py-1 text-[11px] tracking-[0.06em] text-[#00d4b8]"
+                    style={{ fontFamily: "var(--font-mono)" }}
+                    className="max-w-full break-words rounded-[2px] border border-[var(--site-border)] bg-[var(--site-surface-2)] px-2 py-[3px] text-[10px] uppercase leading-snug tracking-[0.06em] text-[var(--site-muted)]"
                   >
                     {t}
                   </span>

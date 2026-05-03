@@ -1,38 +1,44 @@
 import { brand } from "@/lib/content";
-import { contactCopy } from "@/lib/siteCopy";
+import { contact } from "@/lib/siteCopy";
 
 export function ContactForm() {
-  const [contactLead, contactAccent] = contactCopy.title.split(" — ");
-
   return (
     <section
       id="contact"
-      className="relative flex min-h-[80vh] scroll-mt-24 items-center justify-center overflow-hidden bg-[#020c0c] px-6 py-24 md:px-12"
+      className="relative flex min-h-[80vh] scroll-mt-24 items-center justify-center overflow-hidden border-t border-[var(--site-border)] px-6 py-24 md:px-12"
     >
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 50% 60% at 50% 100%, rgba(0,212,184,0.07) 0%, transparent 70%)",
-        }}
-      />
+      <video
+        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover"
+        autoPlay
+        loop
+        muted
+        playsInline
+        aria-hidden
+      >
+        <source src="/bg-loop.mp4" type="video/mp4" />
+      </video>
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-black/75" aria-hidden />
 
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[rgba(0,212,184,0.3)] to-transparent" />
+      <div className="relative z-10 mx-auto max-w-[720px] text-center">
+        <span className="section-label mb-8 inline-flex justify-center after:hidden">{contact.label}</span>
 
-      <div className="relative z-10 mx-auto max-w-[640px] text-center">
-        <span className="section-label mb-8 inline-flex justify-center after:hidden">{contactCopy.label}</span>
-
-        <h2
-          data-reveal
-          style={{ fontFamily: "var(--font-display), sans-serif" }}
-          className="mb-6 text-[clamp(36px,5vw,72px)] font-black leading-[1.0] tracking-[-0.04em] text-white"
-        >
-          {contactLead} —{" "}
-          <span className="text-[#00d4b8]">{contactAccent}</span>
+        <h2 data-reveal className="mb-4 flex flex-col items-center gap-0">
+          <span
+            style={{ fontFamily: "var(--font-section-display), sans-serif" }}
+            className="block text-[clamp(48px,10vw,120px)] font-normal uppercase leading-[0.92] tracking-[0.02em] text-[var(--site-text)]"
+          >
+            {contact.title}
+          </span>
+          <span
+            style={{ fontFamily: "var(--font-section-display), sans-serif" }}
+            className="lab-accent-text block text-[clamp(48px,10vw,120px)] font-normal uppercase leading-[0.92] tracking-[0.02em]"
+          >
+            {contact.titleAccent}
+          </span>
         </h2>
 
-        <p data-reveal className="mb-10 text-[16px] leading-[1.75] text-[#6b8e8a]">
-          {contactCopy.sub}
+        <p data-reveal className="mb-10 text-[16px] leading-relaxed text-[var(--site-muted)]">
+          {contact.sub}
         </p>
 
         <div data-reveal className="flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -40,19 +46,21 @@ export function ContactForm() {
             href={brand.telegram}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex h-[56px] items-center justify-center rounded-sm bg-[#00d4b8] px-10 text-[14px] font-medium tracking-[0.04em] text-[#020c0c] transition-all duration-200 hover:-translate-y-[2px] hover:opacity-85"
+            className="lab-accent-bg inline-flex h-[56px] min-w-[220px] items-center justify-center rounded-[2px] px-10 text-[14px] font-medium tracking-[0.04em] text-[#080808] transition-[filter] hover:brightness-110 active:scale-[0.97]"
           >
-            {contactCopy.primaryBtn}
+            {contact.primaryBtn}
           </a>
           <a
             href={`mailto:${brand.email}`}
-            className="inline-flex h-[56px] items-center justify-center rounded-sm border border-[rgba(0,212,184,0.25)] px-10 text-[14px] font-medium tracking-[0.04em] text-[#00d4b8] transition-all duration-200 hover:-translate-y-[2px] hover:border-[rgba(0,212,184,0.6)]"
+            className="inline-flex h-[56px] min-w-[220px] items-center justify-center rounded-[2px] border border-[var(--site-border)] px-10 text-[14px] font-medium tracking-[0.04em] text-[var(--site-text)] transition-colors hover:border-[var(--site-accent)] hover:lab-accent-text active:scale-[0.97]"
           >
-            {contactCopy.secondaryBtn}
+            {contact.secondaryBtn}
           </a>
         </div>
 
-        <p className="mt-8 text-[13px] text-[#2e4d4a]">{contactCopy.note}</p>
+        <p style={{ fontFamily: "var(--font-mono)" }} className="mt-8 text-[11px] text-[var(--site-muted)]">
+          {contact.note}
+        </p>
       </div>
     </section>
   );

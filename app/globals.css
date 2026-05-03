@@ -4,6 +4,8 @@
 
 :root {
   color-scheme: dark;
+
+  /* Герой / WebGL — прежний циан (HeroBrainGrid не трогаем) */
   --cyan: #00d4b8;
   --cyan-08: rgba(0, 212, 184, 0.08);
   --cyan-15: rgba(0, 212, 184, 0.15);
@@ -22,17 +24,31 @@
   --line: rgba(0, 212, 184, 0.1);
   --line-bright: rgba(0, 212, 184, 0.25);
 
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+  /* Секции ниже героя — v4 */
+  --site-bg: #080808;
+  --site-surface: #111111;
+  --site-surface-2: #1a1a1a;
+  --site-border: #222222;
+  --site-text: #f0f0f0;
+  --site-muted: #b3b3b3;
+  /* Градиент акцента (голубой → лайм); середина для бордеров и fallback */
+  --site-accent-from: #00ffff;
+  --site-accent-to: #32cd32;
+  --site-accent: color-mix(in srgb, var(--site-accent-from) 48%, var(--site-accent-to));
+  --site-accent-dim: color-mix(in srgb, var(--site-accent-from) 28%, var(--site-accent-to));
+
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
-  --font-display: "Unbounded", "Inter", sans-serif;
+  --font-display: "Unbounded", "DM Sans", sans-serif;
+  --font-section-display: "Bebas Neue", "Unbounded", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  --accent: #00d4b8;
+  --accent: var(--site-accent);
 }
 
 html,
 body {
-  background: var(--bg-1);
-  color: var(--t-1);
+  background: var(--site-bg);
+  color: var(--site-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -55,8 +71,8 @@ body.lab-hero-cursor button {
 }
 
 ::selection {
-  background: rgba(0, 212, 184, 0.28);
-  color: #f8fafc;
+  background: color-mix(in srgb, var(--site-accent-from) 28%, transparent);
+  color: #080808;
 }
 
 ::-webkit-scrollbar {
@@ -91,12 +107,15 @@ body.lab-hero-cursor button {
 }
 
 .section-label {
-  font-family: var(--font-sans);
-  font-size: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--cyan);
+  color: transparent;
+  background-image: linear-gradient(115deg, var(--site-accent-from), var(--site-accent-to));
+  -webkit-background-clip: text;
+  background-clip: text;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -106,16 +125,47 @@ body.lab-hero-cursor button {
   display: block;
   width: 32px;
   height: 1px;
-  background: var(--cyan);
-  opacity: 0.4;
+  opacity: 0.55;
+  background: linear-gradient(90deg, var(--site-accent-from), var(--site-accent-to));
 }
 
 [data-reveal] {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(24px);
 }
 
 @layer utilities {
+  /** Единый акцент: текст */
+  .lab-accent-text {
+    color: transparent;
+    background-image: linear-gradient(115deg, var(--site-accent-from), var(--site-accent-to));
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  /** Единый акцент: заливка (кнопки, бейджи, точки) */
+  .lab-accent-bg {
+    background-image: linear-gradient(115deg, var(--site-accent-from), var(--site-accent-to));
+  }
+  /** Короткая декоративная линия */
+  .lab-accent-rule {
+    width: 32px;
+    height: 1px;
+    opacity: 0.55;
+    background: linear-gradient(90deg, var(--site-accent-from), var(--site-accent-to));
+  }
+  /** Карточка тарифа с градиентной обводкой */
+  .lab-accent-plan-highlight {
+    border: 1px solid transparent;
+    background:
+      linear-gradient(var(--site-surface), var(--site-surface)) padding-box,
+      linear-gradient(115deg, var(--site-accent-from), var(--site-accent-to)) border-box;
+  }
+  /** Кольцо маркера таймлайна */
+  /** Hover: полупрозрачная обводка в тон акценту */
+  .lab-accent-border-hover:hover {
+    border-color: color-mix(in srgb, var(--site-accent-from) 45%, transparent);
+  }
+
   .text-balance {
     text-wrap: balance;
   }
@@ -165,6 +215,21 @@ body.lab-hero-cursor button {
   html {
     scroll-behavior: auto;
   }
+}
+
+.case-cover-fallback {
+  background-color: var(--site-surface);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 6px,
+    rgba(255, 255, 255, 0.04) 6px,
+    rgba(255, 255, 255, 0.04) 7px
+  );
+}
+
+.case-locked-pattern {
+  background: repeating-linear-gradient(-45deg, #111 0, #111 10px, #141414 10px, #141414 20px);
 }
 
 /* Герой H1: плотный градиент #fff → #00F2FF; лёгкий контур морской глубины + мягкое ледяное свечение */
