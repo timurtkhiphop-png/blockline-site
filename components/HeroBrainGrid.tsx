@@ -256,7 +256,7 @@ export default function HeroBrainGrid() {
         ) : (
           /* Десктоп: полный WebGL */
           <div
-            className="absolute left-0 right-0 top-0 z-0 h-[100dvh] w-full min-h-0 overflow-hidden brightness-[0.6] saturate-[0.62] contrast-[1.02]"
+            className="absolute left-0 right-0 top-0 z-0 h-[100dvh] w-full min-h-0 overflow-hidden brightness-[0.58] saturate-[0.52] contrast-[1.08]"
             style={{ opacity: webglLayerOpacity, transition: "opacity 0.15s ease-out" }}
             aria-hidden
           >
@@ -274,20 +274,22 @@ export default function HeroBrainGrid() {
             
             <motion.div 
               style={noAnim ? {} : { y: textY, opacity: textOpacity, scale: textScale }}
-              className="pointer-events-auto relative z-10 w-full max-w-[900px]"
+              className="pointer-events-auto relative z-10 -mt-10 w-full max-w-[900px] md:mt-0"
             >
               <div className="flex flex-col items-center md:items-start w-full">
                 
                 <p className="section-label mb-6 justify-center md:justify-start after:hidden text-[10px] tracking-[0.2em] md:mb-8 md:text-[12px] md:tracking-[0.25em]">
-                  {brand.name.toUpperCase()} &nbsp;·&nbsp; {hero.kicker.toUpperCase()}
+                  {/* На мобильной версии оставляем только суть — «8:20 LAB» уже есть в шапке */}
+                  <span className="hidden md:inline">{brand.name.toUpperCase()}</span>
+                  <span className="hidden opacity-60 md:inline">·</span>
+                  <span>{hero.kicker.toUpperCase()}</span>
                 </p>
 
                 <h1
-                  className="hero-headline-gradient leading-[0.95] tracking-[-0.04em] min-h-[1.1em] ml-[-0.02em] flex flex-col w-full items-center text-center md:w-max md:items-start md:text-left max-w-none"
+                  className="hero-headline-gradient hero-headline-size leading-[0.95] tracking-[-0.04em] min-h-[1.1em] ml-[-0.02em] flex flex-col w-full items-center text-center md:w-max md:items-start md:text-left max-w-none"
                   style={{
                     fontFamily: "var(--font-display), sans-serif",
                     fontWeight: 900,
-                    fontSize: "clamp(34px, 9vw, 90px)",
                   }}
                 >
                   {wordGrid.map((line, lineIdx) => (
@@ -329,21 +331,27 @@ export default function HeroBrainGrid() {
                   ))}
                 </h1>
 
-                <motion.p
+                <motion.div
                   initial={noAnim ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   animate={isLoaded || noAnim ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={noAnim ? { duration: 0 } : { delay: 0.58, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                  className="mt-5 max-w-[340px] text-center text-[15px] leading-[1.6] text-[var(--site-muted)] sm:max-w-[420px] md:mt-8 md:max-w-[480px] md:text-left md:text-[17px] md:leading-[1.7]"
+                  className="mt-6 max-w-[360px] space-y-3 text-center sm:max-w-[440px] md:mt-9 md:max-w-[615px] md:space-y-4 md:text-left"
                 >
-                  {hero.sub}
-                </motion.p>
+                  <p className="text-[15px] leading-[1.65] text-[#cfe3e0] md:text-[19px]">
+                    {hero.sub}
+                  </p>
+                  <p className="text-[13.5px] leading-[1.65] text-[#aecac5] md:text-[15px] md:leading-[1.7]">
+                    {hero.sub2}
+                  </p>
+                </motion.div>
 
                 <motion.div
                   initial={noAnim ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
                   animate={isLoaded || noAnim ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
                   transition={noAnim ? { duration: 0 } : { delay: 0.8, duration: 0.45 }}
-                  className="mt-8 flex w-full flex-col items-center justify-center gap-4 sm:flex-row md:mt-10 md:justify-start"
+                  className="mt-8 flex w-full flex-col items-center gap-4 md:mt-11 md:items-start"
                 >
+                <div className="flex w-full flex-col items-center justify-center gap-4 sm:w-auto sm:flex-row md:justify-start">
                   <Magnetic strength={22}>
                     <motion.a
                       href={hero.ctaPrimary.href}
@@ -386,6 +394,11 @@ export default function HeroBrainGrid() {
                       {hero.ctaSecondary.label} →
                     </a>
                   </Magnetic>
+                </div>
+
+                <p className="max-w-[320px] text-center text-[12.5px] leading-[1.6] text-[#a4c4bf] sm:max-w-none md:text-left md:text-[13px]">
+                  {hero.note}
+                </p>
                 </motion.div>
 
               </div>

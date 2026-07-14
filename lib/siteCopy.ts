@@ -4,26 +4,35 @@
  */
 
 export const nav = [
-  { label: "Логика", href: "#why" },
-  { label: "Услуги", href: "#product" },
   { label: "Кейсы", href: "#work" },
-  { label: "Процесс", href: "#process" },
-  { label: "Цены", href: "#pricing" },
+  { label: "Подход", href: "#process" },
+  { label: "Услуги", href: "#product" },
+  { label: "Стоимость", href: "#pricing" },
   { label: "Вопросы", href: "#faq" },
   { label: "Связь", href: "#contact" },
 ];
 
-export type Metric = {
-  value: number;
-  suffix: string;
-  label: string;
+export type ValueFact = {
+  title: string;
   sub: string;
 };
 
-export const metrics: Metric[] = [
-  { value: 47, suffix: "+", label: "Проектов", sub: "от идеи до продакшена" },
-  { value: 3, suffix: "", label: "Плоскости", sub: "одна линия ответственности" },
-  { value: 14, suffix: "дн", label: "До MVP", sub: "от брифа до рабочего сайта" },
+/** Смысловая рамка секции — связывает три преимущества и продолжает Hero. */
+export const valueStripFrame = ["Один специалист", "Полный цикл", "Понятный срок"];
+
+export const valueFacts: ValueFact[] = [
+  {
+    title: "Лично веду проект",
+    sub: "От первого диалога до запуска — без передачи между менеджерами и отделами.",
+  },
+  {
+    title: "Собираю всё в одну систему",
+    sub: "Структура, визуал, разработка и запуск работают как единый продукт.",
+  },
+  {
+    title: "Типовой сайт за 14–20 дней",
+    sub: "Сложные каталоги, магазины и сервисы оцениваются отдельно.",
+  },
 ];
 
 export const why = {

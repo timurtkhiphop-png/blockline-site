@@ -1,14 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { nav as NAV } from "@/lib/siteCopy";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeId, setActiveId] = useState<string>("why");
+  const [activeId, setActiveId] = useState<string>("work");
   const [coarse, setCoarse] = useState(false);
+  const menuRef = useRef<HTMLElement | null>(null);
+  const burgerRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     const q = window.matchMedia("(pointer: coarse)");
@@ -28,7 +30,7 @@ export default function Header() {
     if (coarse) return;
     const ids = NAV.map((item) => item.href.replace(/^#/, ""));
     const pickActive = () => {
-      let current = ids[0] ?? "why";
+      let current = ids[0] ?? "work";
       for (const id of ids) {
         const el = document.getElementById(id);
         if (!el) continue;
@@ -41,6 +43,50 @@ export default function Header() {
     window.addEventListener("scroll", pickActive, { passive: true });
     return () => window.removeEventListener("scroll", pickActive);
   }, [coarse]);
+
+  // Открытое меню: блокировка прокрутки, Escape, удержание фокуса внутри панели
+  useEffect(() => {
+    if (!menuOpen) return;
+    const html = document.documentElement;
+    const prevHtmlOverflow = html.style.overflow;
+    const prevBodyOverflow = document.body.style.overflow;
+    html.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
+    const panel = menuRef.current;
+    const focusables = () =>
+      panel
+        ? Array.from(panel.querySelectorAll<HTMLElement>("a[href], button:not([disabled])"))
+        : [];
+    focusables()[0]?.focus();
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMenuOpen(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const items = focusables();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey && (active === first || !panel?.contains(active))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      html.style.overflow = prevHtmlOverflow;
+      document.body.style.overflow = prevBodyOverflow;
+      document.removeEventListener("keydown", onKeyDown);
+      burgerRef.current?.focus({ preventScroll: true });
+    };
+  }, [menuOpen]);
 
   return (
     <>
@@ -88,18 +134,21 @@ export default function Header() {
           })}
         </nav>
 
-        <div className="flex w-32 flex-shrink-0 items-center justify-end gap-3">
+        <div className="flex flex-shrink-0 items-center justify-end gap-3">
           <a
             href="#contact"
             className="hidden h-9 items-center justify-center rounded-[2px] border border-[var(--site-accent)] px-5 text-[11px] uppercase tracking-[0.08em] text-[var(--site-accent)] transition-all duration-300 hover:lab-accent-bg hover:text-[#080808] active:scale-[0.97] md:inline-flex"
           >
-            Заявка
+            Получить оценку
           </a>
           <button
+            ref={burgerRef}
             type="button"
             onClick={() => setMenuOpen(true)}
             className="flex flex-col gap-[5px] p-1 lg:hidden"
-            aria-label="Меню"
+            aria-label="Открыть меню"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
           >
             <span className="block h-px w-5 bg-[var(--site-text)]" />
             <span className="block h-px w-5 bg-[var(--site-text)]" />
@@ -117,8 +166,11 @@ export default function Header() {
       />
 
       <aside
-        className={`fixed inset-y-0 right-0 z-[200] flex w-[min(100%,320px)] flex-col border-l border-[var(--site-border)] bg-[var(--site-surface)] shadow-[-24px_0_48px_rgba(0,0,0,0.45)] transition-transform duration-300 ease-out lg:hidden ${
-          menuOpen ? "translate-x-0" : "translate-x-full"
+        id="mobile-menu"
+        ref={menuRef}
+        inert={!menuOpen}
+        className={`fixed inset-y-0 right-0 z-[200] flex w-[min(100%,320px)] flex-col border-l border-[var(--site-border)] bg-[var(--site-surface)] shadow-[-24px_0_48px_rgba(0,0,0,0.45)] transition-[transform,visibility] duration-300 ease-out lg:hidden ${
+          menuOpen ? "visible translate-x-0" : "invisible translate-x-full"
         }`}
       >
         <div className="flex items-center justify-between border-b border-[var(--site-border)] px-6 py-5">
@@ -151,7 +203,7 @@ export default function Header() {
             onClick={() => setMenuOpen(false)}
             className="mx-3 mt-6 inline-flex h-11 items-center justify-center rounded-[2px] border border-[var(--site-accent)] text-[12px] uppercase tracking-[0.08em] text-[var(--site-accent)] hover:lab-accent-bg hover:text-[#080808]"
           >
-            Заявка
+            Получить оценку
           </a>
         </nav>
       </aside>

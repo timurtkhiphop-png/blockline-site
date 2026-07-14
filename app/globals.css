@@ -257,19 +257,46 @@ html.lenis, html.lenis body {
   );
   -webkit-background-clip: text;
   background-clip: text;
-  text-shadow: 0 0 24px rgba(0, 242, 255, 0.12);
-  filter: drop-shadow(0 0.5px 1.5px rgba(8, 42, 52, 0.45))
-    drop-shadow(0 0 18px rgba(0, 242, 255, 0.22))
-    drop-shadow(0 0 36px rgba(165, 243, 252, 0.14));
+  text-shadow: 0 0 22px rgba(0, 242, 255, 0.08);
+  filter: drop-shadow(0 0.5px 1.5px rgba(8, 42, 52, 0.5))
+    drop-shadow(0 0 15px rgba(0, 242, 255, 0.14))
+    drop-shadow(0 0 32px rgba(165, 243, 252, 0.09));
+}
+
+/* Размер H1 героя. С md строка «Кадры с характером.» идёт в одну строку (nowrap):
+   ширина строки ≈ 13.55em, поэтому верхняя граница привязана к вьюпорту —
+   иначе на 768–1380px хвост слогана уходит за экран и обрезается. */
+.hero-headline-size {
+  font-size: clamp(34px, 9vw, 90px);
+}
+@media (min-width: 768px) {
+  .hero-headline-size {
+    font-size: clamp(40px, calc((100vw - 96px) / 13.7), 90px);
+  }
+}
+@media (min-width: 1024px) {
+  .hero-headline-size {
+    font-size: clamp(48px, calc((100vw - 176px) / 13.7), 90px);
+  }
 }
 
 .hero-readability-vignette {
-  background: radial-gradient(
-    ellipse 65% 75% at 50% 48%,
-    rgba(2, 12, 12, 0.6) 0%,
-    rgba(2, 12, 12, 0.25) 45%,
-    transparent 100%
-  );
+  /* Слой читаемости: слева (где текст на desktop) — локальное затемнение,
+     справа за ~65% ширины WebGL сохраняет полную глубину. Центральный радиал
+     держит читаемость на mobile, где текст по центру. Не эффект — только композиция. */
+  background:
+    linear-gradient(
+      100deg,
+      rgba(2, 11, 11, 0.5) 0%,
+      rgba(2, 11, 11, 0.22) 40%,
+      rgba(2, 11, 11, 0) 66%
+    ),
+    radial-gradient(
+      ellipse 70% 75% at 50% 50%,
+      rgba(2, 12, 12, 0.42) 0%,
+      rgba(2, 12, 12, 0.16) 48%,
+      transparent 100%
+    );
 }
 
 /* R3F sets touch-action:none on its internal container to capture all gestures.

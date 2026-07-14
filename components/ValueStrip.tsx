@@ -1,84 +1,55 @@
-import { metrics } from "@/lib/siteCopy";
-
-function counterAttr(m: (typeof metrics)[number]) {
-  return `${m.value}${m.suffix}`;
-}
-
-/** Число анимируется отдельно (data-counter); суффикс (+, дн) — компактным кеглем. */
-function MetricFigure({ m, compact }: { m: (typeof metrics)[number]; compact?: boolean }) {
-  const digitBlock = (
-    <span
-      data-counter={String(m.value)}
-      style={{ fontFamily: "var(--font-section-display), sans-serif" }}
-      className={
-        compact
-          ? "inline-block shrink-0 tabular-nums text-[clamp(22px,5.5vw,32px)] font-normal leading-none tracking-[0.02em] lab-accent-text"
-          : "inline-block shrink-0 tabular-nums text-[clamp(36px,6.5vw,64px)] font-normal leading-none tracking-[0.02em] md:text-[clamp(42px,5vw,72px)] lab-accent-text"
-      }
-    >
-      {m.value}
-    </span>
-  );
-
-  if (!m.suffix) return digitBlock;
-
-  return (
-    <span className="inline-flex shrink-0 items-baseline gap-[0.12em] whitespace-nowrap">
-      {digitBlock}
-      <span
-        style={{ fontFamily: "var(--font-mono)" }}
-        className={
-          compact
-            ? "translate-y-[-0.04em] text-[11px] font-medium tracking-[0.06em] opacity-90 lab-accent-text"
-            : "translate-y-[-0.05em] text-[clamp(13px,2vw,17px)] font-medium tracking-[0.06em] opacity-90 lab-accent-text"
-        }
-      >
-        {m.suffix}
-      </span>
-    </span>
-  );
-}
+import { valueFacts, valueStripFrame } from "@/lib/siteCopy";
 
 export function ValueStrip() {
   return (
-    <div className="border-y border-[var(--site-border)] bg-[var(--site-surface)]">
-      {/* Мобилка: одна линия — три метрики с вертикальными разделителями */}
-      <div className="mx-auto flex max-w-[1280px] items-stretch divide-x divide-[var(--site-border)] px-2 py-4 md:hidden">
-        {metrics.map((m) => (
-          <div
-            key={counterAttr(m)}
-            className="flex min-w-0 flex-1 flex-col items-center justify-center gap-1.5 px-1.5 py-1 text-center first:pl-2 last:pr-2"
-          >
-            <MetricFigure m={m} compact />
-            <span
-              style={{ fontFamily: "var(--font-mono)" }}
-              className="block max-w-[100%] truncate text-[9px] uppercase leading-tight tracking-[0.14em] text-[var(--site-muted)]"
-            >
-              {m.label}
+    <section className="border-y border-[var(--site-border)] bg-[var(--site-surface)]">
+      <div className="mx-auto max-w-[1280px] px-4 py-14 md:px-12 md:py-24 xl:px-[48px]">
+        {/* Смысловая рамка — продолжает Hero и задаёт секции характер */}
+        <p
+          style={{ fontFamily: "var(--font-mono)" }}
+          className="mb-11 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] uppercase tracking-[0.2em] text-[var(--site-muted)] md:mb-16 md:text-[12px]"
+        >
+          {valueStripFrame.map((word, i) => (
+            <span key={word} className="flex items-center gap-x-4">
+              {i > 0 && <span aria-hidden className="h-3 w-px bg-[var(--site-border)]" />}
+              {word}
             </span>
-          </div>
-        ))}
-      </div>
+          ))}
+        </p>
 
-      <div className="mx-auto hidden max-w-[1280px] flex-col divide-y divide-[var(--site-border)] px-6 md:flex md:flex-row md:divide-x md:divide-y-0 md:px-12 xl:px-[48px]">
-        {metrics.map((m) => (
-          <div
-            key={counterAttr(m)}
-            className="flex flex-1 flex-col gap-4 py-8 sm:flex-row sm:items-center sm:gap-5 md:min-h-[96px] md:py-6 md:pl-6 md:pr-6 lg:pl-8 lg:pr-8"
-          >
-            <MetricFigure m={m} />
-            <div className="min-w-0 flex-1 sm:max-w-[min(100%,220px)]">
+        <div className="grid divide-y divide-[var(--site-border)] md:grid-cols-3 md:divide-x md:divide-y-0">
+          {valueFacts.map((fact, i) => (
+            <div
+              key={fact.title}
+              className="group flex flex-col py-9 first:pt-0 last:pb-0 md:px-10 md:py-0 md:first:pl-0 md:last:pr-0"
+            >
+              <div className="flex items-center gap-4">
+                <span
+                  style={{ fontFamily: "var(--font-section-display), sans-serif" }}
+                  className="text-[26px] font-normal leading-none opacity-90 transition-opacity duration-300 lab-accent-text group-hover:opacity-100 md:text-[28px]"
+                >
+                  0{i + 1}
+                </span>
+                <span
+                  aria-hidden
+                  className="h-px w-8 origin-left opacity-60 transition-all duration-300 ease-out lab-accent-bg group-hover:w-[52px] group-hover:opacity-100"
+                />
+              </div>
+
               <span
-                style={{ fontFamily: "var(--font-mono)" }}
-                className="mb-1 block text-[11px] uppercase tracking-[0.15em] text-[var(--site-muted)]"
+                style={{ fontFamily: "var(--font-section-display), sans-serif" }}
+                className="mt-7 block text-[21px] font-normal leading-[1.25] text-[var(--site-text)] transition-transform duration-300 ease-out group-hover:translate-x-[3px] md:text-[23px] lg:text-[25px]"
               >
-                {m.label}
+                {fact.title}
               </span>
-              <span className="block text-[13px] leading-snug text-[var(--site-muted)]">{m.sub}</span>
+
+              <p className="mt-3.5 max-w-[380px] text-[14px] leading-[1.6] text-[var(--site-muted)] md:text-[15px]">
+                {fact.sub}
+              </p>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
