@@ -5,6 +5,7 @@ import { NoiseOverlay } from "@/components/NoiseOverlay";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { brand } from "@/lib/content";
 
+
 export const metadata: Metadata = {
   metadataBase: new URL(`https://${brand.domain}`),
   title: {
@@ -13,6 +14,14 @@ export const metadata: Metadata = {
   },
   description:
     "Ручной код без конструкторов: разработка, визуал и деплой в одном контуре. Ориентиры по ценам и кейсы. Тимур Темиров, 8:20 Lab.",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    other: [{ rel: "manifest", url: "/site.webmanifest" }],
+  },
   openGraph: {
     title: `${brand.name} — ${brand.tagline}`,
     description:
@@ -36,6 +45,7 @@ export const viewport: Viewport = {
   themeColor: "#080808",
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -49,12 +59,12 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Unbounded:wght@400;700;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Unbounded:wght@400;700;900&display=swap"
           rel="stylesheet"
         />
       </head>
       <body
-        className="relative min-h-screen overflow-x-hidden bg-[var(--site-bg)] text-[var(--site-text)] antialiased"
+        className="relative min-h-screen bg-[var(--site-bg)] text-[var(--site-text)] antialiased"
         suppressHydrationWarning
       >
         <MouseParallaxProvider>

@@ -51,11 +51,23 @@ export function MouseParallaxProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const w = () => window.innerWidth || 1;
     const h = () => window.innerHeight || 1;
+    const coarse =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(pointer: coarse)").matches;
 
     const onMove = (e: PointerEvent) => {
       targetX.current = (e.clientX / w() - 0.5) * 2;
       targetY.current = (e.clientY / h() - 0.5) * 2;
+      if (coarse) {
+        mx.set(targetX.current);
+        my.set(targetY.current);
+      }
     };
+
+    if (coarse) {
+      window.addEventListener("pointermove", onMove, { passive: true });
+      return () => window.removeEventListener("pointermove", onMove);
+    }
 
     const loop = () => {
       if (!running.current) return;
@@ -73,7 +85,6 @@ export function MouseParallaxProvider({ children }: { children: ReactNode }) {
     };
 
     window.addEventListener("pointermove", onMove, { passive: true });
-    // старт, если сразу в центре: всё равно поедем после первого move
     start();
 
     return () => {

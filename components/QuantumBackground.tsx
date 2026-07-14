@@ -91,22 +91,22 @@ function SwellMesh({
     []
   );
 
+  // Слушаем на window, а не на canvas — так мышь отслеживается даже когда
+  // курсор над текстом (z-10 > z-0 canvas), и анимация не "замирает" на тексте.
   const onPointer = useCallback((e: PointerEvent) => {
-    const el = e.currentTarget as HTMLCanvasElement;
-    const r = el.getBoundingClientRect();
+    const r = gl.domElement.getBoundingClientRect();
     if (r.width < 1 || r.height < 1) return;
     const nx = (e.clientX - r.left) / r.width;
     const ny = (e.clientY - r.top) / r.height;
     mouseTarget.current.x = nx * 2 - 1;
     mouseTarget.current.y = -(ny * 2 - 1);
-  }, []);
+  }, [gl]);
 
   useEffect(() => {
-    const el = gl.domElement;
     const h = (ev: PointerEvent) => onPointer(ev);
-    el.addEventListener("pointermove", h);
-    return () => el.removeEventListener("pointermove", h);
-  }, [gl, onPointer]);
+    window.addEventListener("pointermove", h, { passive: true });
+    return () => window.removeEventListener("pointermove", h);
+  }, [onPointer]);
 
   const onPointerDown = useCallback((e: PointerEvent) => {
     if (e.button !== 0) return;
@@ -250,14 +250,15 @@ type QuantumProps = {
   className?: string;
   parentRef?: RefObject<HTMLDivElement | null>;
   swellStateRef: HeroSwellRef;
+  interactive?: boolean;
 };
 
-export function QuantumBackground({ className, parentRef, swellStateRef }: QuantumProps) {
+export function QuantumBackground({ className, parentRef, swellStateRef, interactive = true }: QuantumProps) {
   const reduceMotion = useReducedMotion();
   return (
     <div
       ref={parentRef}
-      className={["pointer-events-auto absolute inset-0 z-0", className].filter(Boolean).join(" ")}
+      className={["quantum-host absolute inset-0 z-0", interactive ? "pointer-events-auto" : "pointer-events-none", className].filter(Boolean).join(" ")}
       style={{ minHeight: "100dvh" }}
     >
       <Canvas
@@ -265,13 +266,16 @@ export function QuantumBackground({ className, parentRef, swellStateRef }: Quant
         dpr={[1, 1.5]}
         gl={{
           antialias: true,
-          alpha: false,
           powerPreference: "high-performance",
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: 0.9,
         }}
         onCreated={({ gl }) => {
           gl.setClearColor(0x051a1a, 1);
+          // R3F internally sets touch-action:none on its container div, which blocks
+          // native iOS scroll (rubber-banding). Override to allow vertical pan.
+          const container = gl.domElement.parentElement;
+          if (container) container.style.touchAction = "pan-y";
         }}
         camera={{ position: [0, 0, 4.2], fov: 45, near: 0.1, far: 32 }}
         onPointerMove={(e) => {

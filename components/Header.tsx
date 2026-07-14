@@ -8,6 +8,15 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState<string>("why");
+  const [coarse, setCoarse] = useState(false);
+
+  useEffect(() => {
+    const q = window.matchMedia("(pointer: coarse)");
+    const fn = () => setCoarse(q.matches);
+    fn();
+    q.addEventListener("change", fn);
+    return () => q.removeEventListener("change", fn);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -16,6 +25,7 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
+    if (coarse) return;
     const ids = NAV.map((item) => item.href.replace(/^#/, ""));
     const pickActive = () => {
       let current = ids[0] ?? "why";
@@ -30,18 +40,18 @@ export default function Header() {
     pickActive();
     window.addEventListener("scroll", pickActive, { passive: true });
     return () => window.removeEventListener("scroll", pickActive);
-  }, []);
+  }, [coarse]);
 
   return (
     <>
       <header
-        className={`fixed left-0 right-0 top-0 z-50 flex h-16 items-center justify-between px-6 transition-all duration-300 md:px-12 xl:px-[48px] ${
+        className={`${coarse ? "sticky" : "fixed"} left-0 right-0 top-0 z-50 flex h-16 items-center justify-between px-6 transition-all duration-300 md:px-12 xl:px-[48px] ${
           scrolled
             ? "border-b border-[var(--site-border)] bg-[rgba(8,8,8,0.72)] backdrop-blur-md"
             : "border-b border-transparent bg-transparent"
         }`}
       >
-        <a href="#top" className="flex w-32 flex-shrink-0 items-center gap-2.5">
+        <a href="/" className="flex w-32 flex-shrink-0 items-center gap-2.5">
           <span className="relative flex h-1.5 w-1.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full lab-accent-bg opacity-60" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full lab-accent-bg" />

@@ -110,6 +110,7 @@ export type Case = {
   url?: string;
   year?: string;
   image?: string;
+  imageMobile?: string;
   /** cover — заполнить карточку (может обрезать); contain — весь скрин, с полями по краям */
   imageFit?: "cover" | "contain";
   /** CSS object-position, напр. "center 18%" — только при cover */
@@ -118,8 +119,25 @@ export type Case = {
 
 export const cases: Case[] = [
   {
-    id: "da-remont",
+    id: "hookah-ministry",
     index: "01",
+    type: "Многостраничный · Премиум Лаунж",
+    title: "Hookah Ministry",
+    tagline: "Эталон дымной культуры. Тяжелая эстетика. Абсолютная тишина.",
+    task: "Передать эстетику премиального заведения, тяжелую эстетику и абсолютную тишину через дизайн.",
+    solution: "Тёмная тема с золотыми акцентами, 3D-маска в герое, плавные анимации и строгая типографика.",
+    stack: "Next.js · Framer Motion · Tailwind",
+    tags: ["Премиум", "Lounge", "3D"],
+    url: "https://hookahministry.ru",
+    year: "2026",
+    image: "/cases/hookahministry.png",
+    imageMobile: "/cases/hookahministry-mobile.png",
+    imageFit: "contain",
+    locked: false,
+  },
+  {
+    id: "da-remont",
+    index: "02",
     type: "Лендинг · Локальный бизнес",
     title: "DA REMONT",
     tagline: "Ремонт под ключ в Тюмени",
@@ -130,12 +148,13 @@ export const cases: Case[] = [
     url: "https://ck113037.tw1.ru",
     year: "2026",
     image: "/cases/da-remont.png",
+    imageMobile: "/cases/da-remont-mobile.png",
     imageFit: "contain",
     locked: false,
   },
   {
     id: "astrotech",
-    index: "02",
+    index: "03",
     type: "Многостраничный · B2B",
     title: "Астротех",
     tagline: "Поставки микроэлектроники и промоборудования",
@@ -146,11 +165,46 @@ export const cases: Case[] = [
     url: "https://astrotech.su",
     year: "2026",
     image: "/cases/astrotech.png",
+    imageMobile: "/cases/astrotech-mobile.png",
     imageFit: "contain",
     locked: false,
   },
-  { id: "slot-3", locked: true },
-  { id: "slot-4", locked: true },
+  {
+    id: "fortuna-turgoyak",
+    index: "04",
+    type: "Многостраничный · Туризм и бронирование",
+    title: "Fortuna Turgoyak",
+    tagline: "Жильё у озера Тургояк, водные прогулки, остров Веры",
+    task:
+      "Показать спокойствие озера и понятный путь: жильё, прогулки, бронь — без шума и перегруза экрана.",
+    solution:
+      "Воздушный герой, спокойная типографика, аккуратные блоки с офферами и быстрый выход в бронь и контакты.",
+    stack: "Публичный сайт · адаптив",
+    tags: ["Туризм", "Бронирование", "Локация"],
+    url: "http://xn----7sbk2alfeldqdief1p.xn--p1ai/",
+    year: "2026",
+    image: "/cases/fortuna-turgoyak.png",
+    imageMobile: "/cases/fortuna-turgoyak-mobile.png",
+    imageFit: "contain",
+    locked: false,
+  },
+  {
+    id: "ocean",
+    index: "05",
+    type: "Лендинг · B2B",
+    title: "Ocean",
+    tagline: "Ваш Торговый Дом в Китае. Полный цикл ВЭД под ключ.",
+    task: "Разработать презентабельный сайт для компании-резидента ЭСТ Урумчи, отразить масштаб и надежность партнера в сфере логистики и ВЭД.",
+    solution: "Строгий дизайн в тёмных тонах с красными акцентами, передающий эстетику портовой логистики. Удобная структура для B2B-клиентов.",
+    stack: "Публичный сайт · адаптив",
+    tags: ["B2B", "Логистика", "ВЭД"],
+    url: "https://xaietc.ru/",
+    year: "2026",
+    image: "/cases/ocean.png",
+    imageMobile: "/cases/ocean-mobile.png",
+    imageFit: "contain",
+    locked: false,
+  },
 ];
 
 export const process = {
@@ -240,6 +294,22 @@ export const pricing = {
         "Базовое SEO на каждой странице",
         "Аналитика: Метрика или GA4",
         "Деплой и поддержка запуска",
+      ],
+      cta: "Обсудить",
+      highlight: false,
+    },
+    {
+      id: "ecommerce",
+      name: "Интернет-магазин",
+      price: "от 80 000 ₽",
+      timeline: "от 21 дня",
+      description: "Полноценный e-commerce.",
+      features: [
+        "Каталог, корзина, избранное",
+        "Интеграция с эквайрингом",
+        "Удобная админ-панель (CMS)",
+        "SEO-оптимизация товаров",
+        "Деплой и настройка платформы",
       ],
       cta: "Обсудить",
       highlight: false,

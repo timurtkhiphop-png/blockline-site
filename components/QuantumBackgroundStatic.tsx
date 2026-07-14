@@ -19,7 +19,7 @@ export function QuantumBackground({ className, parentRef }: QuantumProps) {
     <div
       ref={parentRef}
       className={["pointer-events-none absolute inset-0 z-0 bg-[#051a1a]", className].filter(Boolean).join(" ")}
-      style={{ minHeight: "100dvh" }}
+      style={{ minHeight: "100vh", height: "100svh" }}
       aria-hidden
     />
   );

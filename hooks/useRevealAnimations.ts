@@ -12,6 +12,10 @@ export function useRevealAnimations() {
     const reduce =
       typeof window.matchMedia === "function" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersCoarse =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(pointer: coarse)").matches;
+
     if (reduce) {
       document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => {
         gsap.set(el, { y: 0, opacity: 1 });
@@ -19,32 +23,47 @@ export function useRevealAnimations() {
       return;
     }
 
+    if (prefersCoarse) {
+      document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => {
+        gsap.set(el, { y: 0, opacity: 1 });
+      });
+      // На мобилке ScrollTrigger + счётчики часто дают дёрганый скролл.
+      // Оставляем элементы видимыми и выходим без привязки к скроллу.
+      document.querySelectorAll<HTMLElement>("[data-counter]").forEach((el) => {
+        const raw = el.dataset.counter ?? "";
+        el.textContent = raw;
+      });
+      return;
+    }
+
     const revealTweens: gsap.core.Tween[] = [];
     const reveals = gsap.utils.toArray<HTMLElement>("[data-reveal]");
 
-    reveals.forEach((el) => {
-      const delayStr =
-        el.style.getPropertyValue("--delay").trim() ||
-        getComputedStyle(el).getPropertyValue("--delay").trim();
-      const delay = delayStr ? parseFloat(delayStr) || 0 : 0;
-      const tw = gsap.fromTo(
-        el,
-        { y: 24, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.7,
-          ease: "power2.out",
-          delay,
-          scrollTrigger: {
-            trigger: el,
-            start: "top 88%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
-      revealTweens.push(tw);
-    });
+    if (!prefersCoarse) {
+      reveals.forEach((el) => {
+        const delayStr =
+          el.style.getPropertyValue("--delay").trim() ||
+          getComputedStyle(el).getPropertyValue("--delay").trim();
+        const delay = delayStr ? parseFloat(delayStr) || 0 : 0;
+        const tw = gsap.fromTo(
+          el,
+          { y: 24, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.7,
+            ease: "power2.out",
+            delay,
+            scrollTrigger: {
+              trigger: el,
+              start: "top 88%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+        revealTweens.push(tw);
+      });
+    }
 
     requestAnimationFrame(() => {
       ScrollTrigger.refresh();

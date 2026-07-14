@@ -37,10 +37,10 @@
   --site-accent: color-mix(in srgb, var(--site-accent-from) 48%, var(--site-accent-to));
   --site-accent-dim: color-mix(in srgb, var(--site-accent-from) 28%, var(--site-accent-to));
 
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
-  --font-display: "Unbounded", "DM Sans", sans-serif;
-  --font-section-display: "Bebas Neue", "Unbounded", sans-serif;
+  --font-display: "Unbounded", "Inter", sans-serif;
+  --font-section-display: "Unbounded", "Inter", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --accent: var(--site-accent);
 }
@@ -52,18 +52,26 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* Выключаем iOS-резинку (rubber-banding) на всём документе */
+  overscroll-behavior-y: none;
 }
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   font-family: var(--font-sans);
-  overflow-x: hidden;
 }
 
-/* Кастомное кольцо в герое; системный курсор скрываем только пока смонтирован hero с lab */
+/* Кастомный курсор по всему сайту */
+body.lab-site-cursor,
+body.lab-site-cursor * {
+  cursor: none !important;
+}
+
+/* Fallback для hero-only режима */
 body.lab-hero-cursor,
 body.lab-hero-cursor a,
 body.lab-hero-cursor button {
@@ -76,18 +84,25 @@ body.lab-hero-cursor button {
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  display: none;
+  width: 0px;
 }
-::-webkit-scrollbar-track {
-  background: var(--bg-1);
+
+/* Lenis recommended styles */
+html.lenis, html.lenis body {
+  height: auto;
 }
-::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.2);
-  border-radius: 8px;
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.35);
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
 
 .text-cyan {
@@ -129,10 +144,6 @@ body.lab-hero-cursor button {
   background: linear-gradient(90deg, var(--site-accent-from), var(--site-accent-to));
 }
 
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(24px);
-}
 
 @layer utilities {
   /** Единый акцент: текст */
@@ -259,4 +270,12 @@ body.lab-hero-cursor button {
     rgba(2, 12, 12, 0.25) 45%,
     transparent 100%
   );
+}
+
+/* R3F sets touch-action:none on its internal container to capture all gestures.
+   This blocks native iOS scroll (rubber-banding). Override to pan-y so the
+   browser handles vertical scrolling while the canvas keeps horizontal gestures.
+   !important beats R3F's inline style assignment. */
+.quantum-host > div {
+  touch-action: pan-y !important;
 }

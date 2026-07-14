@@ -35,9 +35,9 @@ export function Footer() {
               </svg>
             </a>
             <a
-              href={`mailto:${brand.email}`}
-              className="text-[var(--site-muted)] transition-colors hover:text-[var(--site-text)]"
-              aria-label="Email"
+              href={brand.mailtoHref}
+              className="relative z-10 text-[var(--site-muted)] transition-colors hover:text-[var(--site-text)]"
+              aria-label="Написать на почту"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                 <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
@@ -47,6 +47,16 @@ export function Footer() {
           <span style={{ fontFamily: "var(--font-mono)" }} className="text-[11px] text-[var(--site-muted)]">
             © {year} {brand.name}
           </span>
+        </div>
+      </div>
+
+      <div className="mx-auto mt-12 flex max-w-[1280px] flex-col items-center justify-between gap-4 border-t border-white/5 pt-8 md:flex-row">
+        <p style={{ fontFamily: "var(--font-mono)" }} className="text-[10px] uppercase tracking-[0.1em] text-[var(--site-muted)]/70 text-center md:text-left">
+          Информация на сайте не является публичной офертой
+        </p>
+        <div style={{ fontFamily: "var(--font-mono)" }} className="flex flex-wrap justify-center gap-6 text-[10px] uppercase tracking-[0.1em] text-[var(--site-muted)]/70">
+          <a href="/privacy" className="transition-colors hover:text-[var(--site-accent)]">Политика конфиденциальности</a>
+          <a href="/terms" className="transition-colors hover:text-[var(--site-accent)]">Пользовательское соглашение</a>
         </div>
       </div>
     </footer>

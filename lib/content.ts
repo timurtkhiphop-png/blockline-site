@@ -3,14 +3,16 @@ export const brand = {
   name: "8:20 Lab",
   tagline: "Цифровая архитектура",
   person: "Тимур Темиров",
-  domain: "blockline.com.ru",
+  domain: "820lab.ru",
   telegram: "https://t.me/timur_t_k",
   telegramHandle: "@timur_t_k",
   channel: "https://t.me/lab820",
   channelHandle: "@lab820",
   phone: "+7 (995) 101-41-74",
   phoneTel: "+79951014174",
+  /** Прямая ссылка для mailto (без обёрток) */
   email: "t1mmmurrr@mail.ru",
+  mailtoHref: "mailto:t1mmmurrr@mail.ru",
 };
 
 export const nav = [
@@ -26,8 +28,8 @@ export const nav = [
 /** Герой: строки H1 (если нужна пословная анимация в других блоках) */
 export const hero = {
   lines: [
-    ["Сайт", "с системой."],
-    ["Кадр", "с характером."],
+    ["Сайты", "с системой."],
+    ["Кадры", "с характером."],
   ],
   accentWordIndex: 2,
   kicker: "код — визуал — запуск",
