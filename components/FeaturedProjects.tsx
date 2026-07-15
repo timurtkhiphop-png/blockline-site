@@ -1,6 +1,7 @@
 "use client";
 
 import { cases, portfolioMeta, type Case } from "@/lib/projects";
+import Link from "next/link";
 
 function FeaturedCase({ c, index }: { c: Case, index: number }) {
   const url = `/projects/${c.id}`;
@@ -8,7 +9,7 @@ function FeaturedCase({ c, index }: { c: Case, index: number }) {
   return (
     <div className="group flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-10 lg:gap-12 items-start">
       {/* Image — 7 cols */}
-      <a
+      <Link
         href={url}
         className={`relative block overflow-hidden rounded-[4px] border border-white/[0.06] bg-[#080808] w-full ${
           index % 2 !== 0 ? "md:col-span-7 md:order-2" : "md:col-span-7"
@@ -27,7 +28,7 @@ function FeaturedCase({ c, index }: { c: Case, index: number }) {
             />
           )}
         </div>
-      </a>
+      </Link>
 
       {/* Content — 5 cols */}
       <div
@@ -68,12 +69,12 @@ function FeaturedCase({ c, index }: { c: Case, index: number }) {
         )}
 
         <div className="flex items-center justify-between border-t border-white/[0.06] pt-5 mt-auto">
-          <a
+          <Link
             href={url}
             className="inline-flex w-full md:w-auto items-center justify-between md:justify-start text-[14px] font-semibold text-white transition-colors duration-300 hover:text-[var(--site-accent)]"
           >
             Смотреть кейс <span className="ml-2 transition-transform group-hover:translate-x-0.5">→</span>
-          </a>
+          </Link>
         </div>
       </div>
     </div>
@@ -121,12 +122,12 @@ export function FeaturedProjects() {
 
         {/* ── Footer ── */}
         <div className="mt-16 md:mt-24 flex items-center justify-center md:justify-start">
-          <a
+          <Link
             href="/projects"
             className="inline-flex h-12 md:h-14 items-center justify-center whitespace-nowrap rounded-[2px] border border-white/20 bg-white/5 px-8 md:px-10 text-[12px] md:text-[13px] uppercase tracking-[0.08em] text-white transition-all duration-300 hover:border-[var(--site-accent)] hover:bg-[var(--site-accent)] hover:text-[#080808]"
           >
             Все проекты →
-          </a>
+          </Link>
         </div>
       </div>
     </section>

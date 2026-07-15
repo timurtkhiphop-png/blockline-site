@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { MouseParallaxProvider } from "@/components/MouseParallaxProvider";
+import ClientShell from "@/components/ClientShell";
 import { NoiseOverlay } from "@/components/NoiseOverlay";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { brand } from "@/lib/content";
@@ -67,7 +67,7 @@ export default function RootLayout({
         className="relative min-h-screen bg-[var(--site-bg)] text-[var(--site-text)] antialiased"
         suppressHydrationWarning
       >
-        <MouseParallaxProvider>
+        <ClientShell>
           <div
             aria-hidden
             className="pointer-events-none fixed inset-0 z-0 grid-bg opacity-[0.18] mask-fade-b"
@@ -75,7 +75,7 @@ export default function RootLayout({
           <NoiseOverlay />
           <ScrollProgress />
           <div className="relative z-10">{children}</div>
-        </MouseParallaxProvider>
+        </ClientShell>
       </body>
     </html>
   );

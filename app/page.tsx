@@ -1,4 +1,4 @@
-import ClientShell from "@/components/ClientShell";
+
 import Header from "@/components/Header";
 import ThreadLine from "@/components/ThreadLine";
 import HeroBrainGrid from "@/components/HeroBrainGrid";
@@ -14,21 +14,19 @@ import { Footer } from "@/components/Footer";
 
 export default function Page() {
   return (
-    <ClientShell>
-      <main className="w-full min-w-0">
-        <ThreadLine />
-        <Header />
-        <HeroBrainGrid />
-        <ValueStrip />
-        <FeaturedProjects />
-        <WhySection />
-        <OfferSection />
-        <ProcessSimple />
-        <PricingSection />
-        <FaqSection />
-        <ContactForm />
-        <Footer />
-      </main>
-    </ClientShell>
+    <main className="w-full min-w-0">
+      <ThreadLine />
+      <Header />
+      <HeroBrainGrid />
+      <ValueStrip />
+      <FeaturedProjects />
+      <WhySection />
+      <OfferSection />
+      <ProcessSimple />
+      <PricingSection />
+      <FaqSection />
+      <ContactForm />
+      <Footer />
+    </main>
   );
 }

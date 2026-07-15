@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { nav as NAV } from "@/lib/siteCopy";
 
 export default function Header() {
@@ -109,7 +110,7 @@ export default function Header() {
             : "border-b border-transparent bg-transparent"
         }`}
       >
-        <a href="/" className="flex w-32 flex-shrink-0 items-center gap-2.5">
+        <Link href="/" className="flex w-32 flex-shrink-0 items-center gap-2.5">
           <span className="relative flex h-1.5 w-1.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full lab-accent-bg opacity-60" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full lab-accent-bg" />
@@ -120,7 +121,7 @@ export default function Header() {
           >
             8:20 lab
           </span>
-        </a>
+        </Link>
 
         <nav
           className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex"
@@ -138,7 +139,7 @@ export default function Header() {
             }
 
             return (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 style={{ fontFamily: "var(--font-mono)" }}
@@ -149,18 +150,18 @@ export default function Header() {
                 }`}
               >
                 {item.label}
-              </a>
+              </Link>
             );
           })}
         </nav>
 
         <div className="flex flex-shrink-0 items-center justify-end gap-3">
-          <a
+          <Link
             href="/#contact"
             className="hidden h-9 items-center justify-center rounded-[2px] border border-[var(--site-accent)] px-5 text-[11px] uppercase tracking-[0.08em] text-[var(--site-accent)] transition-all duration-300 hover:lab-accent-bg hover:text-[#080808] active:scale-[0.97] md:inline-flex"
           >
             Получить оценку
-          </a>
+          </Link>
           <button
             ref={burgerRef}
             type="button"
@@ -208,7 +209,7 @@ export default function Header() {
         </div>
         <nav className="flex flex-col gap-1 px-4 py-6" aria-label="Мобильная навигация">
           {NAV.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               onClick={() => setMenuOpen(false)}
@@ -216,15 +217,15 @@ export default function Header() {
               className="rounded-[2px] px-3 py-3 text-[13px] uppercase tracking-[0.12em] text-[var(--site-muted)] transition-colors hover:bg-[var(--site-surface-2)] hover:lab-accent-text"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
-          <a
+          <Link
             href="/#contact"
             onClick={() => setMenuOpen(false)}
             className="mx-3 mt-6 inline-flex h-11 items-center justify-center rounded-[2px] border border-[var(--site-accent)] text-[12px] uppercase tracking-[0.08em] text-[var(--site-accent)] hover:lab-accent-bg hover:text-[#080808]"
           >
             Получить оценку
-          </a>
+          </Link>
         </nav>
       </aside>
     </>

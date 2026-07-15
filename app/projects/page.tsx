@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import ClientShell from "@/components/ClientShell";
 import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { cases, portfolioMeta, type Case } from "@/lib/projects";
 import { brand } from "@/lib/content";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Проекты",
@@ -28,7 +28,7 @@ function FlagshipCase({ c }: { c: Case }) {
     <div className="group">
       <div className="grid grid-cols-1 lg:grid-cols-12 overflow-hidden rounded-[4px] border border-white/[0.06] bg-[#0a0a0a]">
         {/* Image — 8 cols */}
-        <a href={url} className="relative lg:col-span-8 block overflow-hidden">
+        <Link href={url} className="relative lg:col-span-8 block overflow-hidden">
           <div className="aspect-[16/9] lg:aspect-auto lg:h-full lg:min-h-[520px]">
             {c.image && (
               // eslint-disable-next-line @next/next/no-img-element
@@ -42,7 +42,7 @@ function FlagshipCase({ c }: { c: Case }) {
               />
             )}
           </div>
-        </a>
+        </Link>
 
         {/* Content — 4 cols */}
         <div className="lg:col-span-4 flex flex-col justify-between p-7 sm:p-8 lg:p-10 xl:p-12">
@@ -73,12 +73,12 @@ function FlagshipCase({ c }: { c: Case }) {
             >
               {c.stack}
             </span>
-            <a
+            <Link
               href={url}
               className="inline-flex w-full md:w-auto items-center justify-between md:justify-start text-[14px] font-semibold text-white transition-colors duration-300 hover:text-[var(--site-accent)]"
             >
               Смотреть кейс <span className="ml-2 transition-transform group-hover:translate-x-0.5">→</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -96,7 +96,7 @@ function EditorialCase({ c, reversed = false }: { c: Case; reversed?: boolean })
     <div className="group">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         {/* Image — 7 cols */}
-        <a
+        <Link
           href={url}
           className={`relative block overflow-hidden rounded-[4px] border border-white/[0.06] bg-[#080808] ${
             reversed ? "lg:col-span-7 lg:order-2" : "lg:col-span-7"
@@ -115,7 +115,7 @@ function EditorialCase({ c, reversed = false }: { c: Case; reversed?: boolean })
               />
             )}
           </div>
-        </a>
+        </Link>
 
         {/* Content — 5 cols */}
         <div
@@ -148,12 +148,12 @@ function EditorialCase({ c, reversed = false }: { c: Case; reversed?: boolean })
             >
               {c.stack}
             </span>
-            <a
+            <Link
               href={url}
               className="inline-flex w-full md:w-auto items-center justify-between md:justify-start text-[14px] font-semibold text-white transition-colors duration-300 hover:text-[var(--site-accent)]"
             >
               Смотреть кейс <span className="ml-2 transition-transform group-hover:translate-x-0.5">→</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -169,7 +169,7 @@ function SecondaryCard({ c }: { c: Case }) {
 
   return (
     <div className="group flex flex-col h-full">
-      <a
+      <Link
         href={url}
         className="relative block w-full overflow-hidden rounded-[4px] border border-white/[0.06] bg-[#080808] mb-6"
       >
@@ -185,7 +185,7 @@ function SecondaryCard({ c }: { c: Case }) {
             />
           )}
         </div>
-      </a>
+      </Link>
 
       <span
         style={{ fontFamily: "var(--font-mono)" }}
@@ -203,12 +203,12 @@ function SecondaryCard({ c }: { c: Case }) {
 
       <p className="text-[14px] leading-relaxed text-white/60 mb-6">{c.tagline}</p>
 
-      <a
+      <Link
         href={url}
         className="mt-auto inline-flex w-full md:w-auto items-center justify-between md:justify-start text-[14px] font-semibold text-white transition-colors duration-300 hover:text-[var(--site-accent)]"
       >
         Смотреть кейс <span className="ml-2 transition-transform group-hover:translate-x-0.5">→</span>
-      </a>
+      </Link>
     </div>
   );
 }
@@ -220,7 +220,7 @@ export default function ProjectsPage() {
   const secondary = cases.slice(3);
 
   return (
-    <ClientShell>
+    <>
       <Header />
       <main className="w-full min-w-0 pb-20 pt-32 lg:pt-40 bg-[var(--site-bg)]">
         <div className="mx-auto max-w-[1280px] px-6 md:px-12 xl:px-[48px]">
@@ -285,16 +285,16 @@ export default function ProjectsPage() {
                 Расскажите о бизнесе и задаче. Я посмотрю исходные данные и предложу подходящий формат.
               </p>
             </div>
-            <a
+            <Link
               href="/#contact"
               className="inline-flex h-14 w-full md:w-auto items-center justify-center rounded-[2px] border border-[var(--site-accent)] px-8 text-[13px] uppercase tracking-[0.08em] text-[var(--site-accent)] transition-colors hover:bg-[var(--site-accent)] hover:text-[#080808]"
             >
               Получить оценку
-            </a>
+            </Link>
           </div>
         </div>
       </main>
       <Footer />
-    </ClientShell>
+    </>
   );
 }

@@ -1,5 +1,6 @@
 import { brand } from "@/lib/content";
 import { footer } from "@/lib/siteCopy";
+import Link from "next/link";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -7,7 +8,7 @@ export function Footer() {
     <footer className="border-t border-[var(--site-border)] bg-[var(--site-bg)] px-6 py-10 md:px-12 xl:px-[48px]">
       <div className="mx-auto flex max-w-[1280px] flex-col gap-8 md:flex-row md:items-start md:justify-between">
         <div className="flex flex-col gap-3">
-          <a href="#top" className="inline-flex items-center gap-2">
+          <Link href="#top" className="inline-flex items-center gap-2">
             <span className="h-1.5 w-1.5 shrink-0 rounded-full lab-accent-bg" />
             <span
               style={{ fontFamily: "var(--font-section-display), sans-serif" }}
@@ -15,7 +16,7 @@ export function Footer() {
             >
               {footer.logo}
             </span>
-          </a>
+          </Link>
           <p style={{ fontFamily: "var(--font-mono)" }} className="max-w-[360px] text-[10px] uppercase tracking-[0.15em] text-[var(--site-muted)]">
             {footer.tagline}
           </p>
@@ -55,8 +56,8 @@ export function Footer() {
           Информация на сайте не является публичной офертой
         </p>
         <div style={{ fontFamily: "var(--font-mono)" }} className="flex flex-wrap justify-center gap-6 text-[10px] uppercase tracking-[0.1em] text-[var(--site-muted)]/70">
-          <a href="/privacy" className="transition-colors hover:text-[var(--site-accent)]">Политика конфиденциальности</a>
-          <a href="/terms" className="transition-colors hover:text-[var(--site-accent)]">Пользовательское соглашение</a>
+          <Link href="/privacy" className="transition-colors hover:text-[var(--site-accent)]">Политика конфиденциальности</Link>
+          <Link href="/terms" className="transition-colors hover:text-[var(--site-accent)]">Пользовательское соглашение</Link>
         </div>
       </div>
     </footer>

@@ -1,10 +1,10 @@
-import ClientShell from "@/components/ClientShell";
+
 import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
 export default function PrivacyPage() {
   return (
-    <ClientShell>
+    <>
       <main className="w-full min-w-0">
         <Header />
         
@@ -74,6 +74,6 @@ export default function PrivacyPage() {
 
         <Footer />
       </main>
-    </ClientShell>
+    </>
   );
 }

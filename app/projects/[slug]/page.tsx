@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import ClientShell from "@/components/ClientShell";
 import Header from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { cases } from "@/lib/projects";
 import { brand } from "@/lib/content";
+import Link from "next/link";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -52,20 +52,20 @@ export default async function CasePage({ params }: Props) {
   const nextCase = availableCases[(currentAvailableIndex + 1) % availableCases.length];
 
   return (
-    <ClientShell>
+    <>
       <Header />
       <main className="w-full min-w-0 pb-20 pt-32 lg:pt-40 bg-[var(--site-bg)]">
         <div className="mx-auto max-w-[1280px] px-6 md:px-12 xl:px-[48px]">
           
           {/* ── Back Link ── */}
           <div className="mb-12 md:mb-16">
-            <a
+            <Link
               href="/projects"
               style={{ fontFamily: "var(--font-mono)" }}
               className="inline-flex items-center text-[10px] uppercase tracking-[0.14em] text-[var(--site-muted)] transition-colors hover:text-[var(--site-accent)]"
             >
               <span className="mr-2">←</span> Все проекты
-            </a>
+            </Link>
           </div>
 
           {/* ── Hero ── */}
@@ -214,12 +214,12 @@ export default async function CasePage({ params }: Props) {
             <p className="text-[15px] text-[var(--site-muted)] mb-8 max-w-[500px]">
               Расскажите о бизнесе. Я предложу подходящий формат реализации.
             </p>
-            <a
+            <Link
               href="/#contact"
               className="inline-flex h-14 items-center justify-center rounded-[2px] border border-[var(--site-accent)] bg-transparent px-10 text-[13px] uppercase tracking-[0.08em] text-[var(--site-accent)] transition-all duration-300 hover:bg-[var(--site-accent)] hover:text-[#080808]"
             >
               Обсудить задачу
-            </a>
+            </Link>
           </div>
 
           {/* ── Next Project ── */}
@@ -231,7 +231,7 @@ export default async function CasePage({ params }: Props) {
               >
                 Следующий проект
               </span>
-              <a href={`/projects/${nextCase.id}`} className="group inline-block">
+              <Link href={`/projects/${nextCase.id}`} className="group inline-block">
                 <h3
                   style={{ fontFamily: "var(--font-section-display), sans-serif" }}
                   className="text-[32px] md:text-[48px] uppercase leading-tight transition-colors group-hover:text-[var(--site-accent)] mb-8"
@@ -252,13 +252,13 @@ export default async function CasePage({ params }: Props) {
                     </div>
                   </div>
                 )}
-              </a>
+              </Link>
             </div>
           )}
 
         </div>
       </main>
       <Footer />
-    </ClientShell>
+    </>
   );
 }
