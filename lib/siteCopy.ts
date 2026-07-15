@@ -96,9 +96,9 @@ export const offerCards: OfferCard[] = [
 ];
 
 export const portfolioMeta = {
-  label: "КЕЙСЫ",
-  title: "Работы.",
-  sub: "Задача, решение, результат.",
+  label: "ИЗБРАННЫЕ ПРОЕКТЫ",
+  title: "От атмосферы бренда до сложной бизнес-структуры.",
+  sub: "Каждый проект начинается с задачи бизнеса, а не с готового шаблона.",
   channelNote: "Новые кейсы — первыми в",
   channelLabel: "Telegram-канале",
   channelHref: "https://t.me/lab820",
@@ -116,6 +116,8 @@ export type Case = {
   solution?: string;
   stack?: string;
   tags?: string[];
+  /** Реализованные возможности (3–4 пункта, извлечены из решения) */
+  features?: string[];
   url?: string;
   year?: string;
   image?: string;
@@ -137,6 +139,12 @@ export const cases: Case[] = [
     solution: "Тёмная тема с золотыми акцентами, 3D-маска в герое, плавные анимации и строгая типографика.",
     stack: "Next.js · Framer Motion · Tailwind",
     tags: ["Премиум", "Lounge", "3D"],
+    features: [
+      "3D-маска в герое",
+      "Тёмная тема с золотыми акцентами",
+      "Плавные анимации и прелоадер",
+      "Строгая премиальная типографика",
+    ],
     url: "https://hookahministry.ru",
     year: "2026",
     image: "/cases/hookahministry.png",
@@ -145,8 +153,54 @@ export const cases: Case[] = [
     locked: false,
   },
   {
-    id: "da-remont",
+    id: "astrotech",
     index: "02",
+    type: "Многостраничный · B2B",
+    title: "Астротех",
+    tagline: "Поставки микроэлектроники и промоборудования",
+    task: "B2B-сайт с каталогом по направлениям: структура под закупки, без лишних кликов до заявки.",
+    solution: "Многостраничник с навигацией по категориям, блоком доверия и формой запроса под отдел снабжения.",
+    stack: "HTML · CSS · JS",
+    tags: ["B2B", "Каталог", "Многостраничный"],
+    features: [
+      "Навигация по категориям оборудования",
+      "Блок доверия и сертификации",
+      "Форма запроса под отдел снабжения",
+    ],
+    url: "https://astrotech.su",
+    year: "2026",
+    image: "/cases/astrotech.png",
+    imageMobile: "/cases/astrotech-mobile.png",
+    imageFit: "contain",
+    locked: false,
+  },
+  {
+    id: "fortuna-turgoyak",
+    index: "03",
+    type: "Многостраничный · Туризм и бронирование",
+    title: "Fortuna Turgoyak",
+    tagline: "Жильё у озера Тургояк, водные прогулки, остров Веры",
+    task:
+      "Показать спокойствие озера и понятный путь: жильё, прогулки, бронь — без шума и перегруза экрана.",
+    solution:
+      "Воздушный герой, спокойная типографика, аккуратные блоки с офферами и быстрый выход в бронь и контакты.",
+    stack: "Публичный сайт · адаптив",
+    tags: ["Туризм", "Бронирование", "Локация"],
+    features: [
+      "Блоки с офферами жилья и прогулок",
+      "Быстрый выход в бронь и контакты",
+      "Воздушный герой с панорамой озера",
+    ],
+    url: "http://xn----7sbk2alfeldqdief1p.xn--p1ai/",
+    year: "2026",
+    image: "/cases/fortuna-turgoyak.png",
+    imageMobile: "/cases/fortuna-turgoyak-mobile.png",
+    imageFit: "contain",
+    locked: false,
+  },
+  {
+    id: "da-remont",
+    index: "04",
     type: "Лендинг · Локальный бизнес",
     title: "DA REMONT",
     tagline: "Ремонт под ключ в Тюмени",
@@ -158,42 +212,6 @@ export const cases: Case[] = [
     year: "2026",
     image: "/cases/da-remont.png",
     imageMobile: "/cases/da-remont-mobile.png",
-    imageFit: "contain",
-    locked: false,
-  },
-  {
-    id: "astrotech",
-    index: "03",
-    type: "Многостраничный · B2B",
-    title: "Астротех",
-    tagline: "Поставки микроэлектроники и промоборудования",
-    task: "B2B-сайт с каталогом по направлениям: структура под закупки, без лишних кликов до заявки.",
-    solution: "Многостраничник с навигацией по категориям, блоком доверия и формой запроса под отдел снабжения.",
-    stack: "HTML · CSS · JS",
-    tags: ["B2B", "Каталог", "Многостраничный"],
-    url: "https://astrotech.su",
-    year: "2026",
-    image: "/cases/astrotech.png",
-    imageMobile: "/cases/astrotech-mobile.png",
-    imageFit: "contain",
-    locked: false,
-  },
-  {
-    id: "fortuna-turgoyak",
-    index: "04",
-    type: "Многостраничный · Туризм и бронирование",
-    title: "Fortuna Turgoyak",
-    tagline: "Жильё у озера Тургояк, водные прогулки, остров Веры",
-    task:
-      "Показать спокойствие озера и понятный путь: жильё, прогулки, бронь — без шума и перегруза экрана.",
-    solution:
-      "Воздушный герой, спокойная типографика, аккуратные блоки с офферами и быстрый выход в бронь и контакты.",
-    stack: "Публичный сайт · адаптив",
-    tags: ["Туризм", "Бронирование", "Локация"],
-    url: "http://xn----7sbk2alfeldqdief1p.xn--p1ai/",
-    year: "2026",
-    image: "/cases/fortuna-turgoyak.png",
-    imageMobile: "/cases/fortuna-turgoyak-mobile.png",
     imageFit: "contain",
     locked: false,
   },

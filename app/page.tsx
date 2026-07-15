@@ -20,9 +20,9 @@ export default function Page() {
         <Header />
         <HeroBrainGrid />
         <ValueStrip />
+        <Portfolio />
         <WhySection />
         <OfferSection />
-        <Portfolio />
         <ProcessSimple />
         <PricingSection />
         <FaqSection />
