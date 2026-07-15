@@ -7,7 +7,7 @@ import { WhySection } from "@/components/WhySection";
 import { OfferSection } from "@/components/OfferSection";
 import { PricingSection } from "@/components/PricingSection";
 import { ProcessSimple } from "@/components/ProcessSimple";
-import { Portfolio } from "@/components/Portfolio";
+import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { FaqSection } from "@/components/FaqSection";
 import { ContactForm } from "@/components/ContactForm";
 import { Footer } from "@/components/Footer";
@@ -20,7 +20,7 @@ export default function Page() {
         <Header />
         <HeroBrainGrid />
         <ValueStrip />
-        <Portfolio />
+        <FeaturedProjects />
         <WhySection />
         <OfferSection />
         <ProcessSimple />

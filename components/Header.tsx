@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
+import { usePathname } from "next/navigation";
 import { nav as NAV } from "@/lib/siteCopy";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeId, setActiveId] = useState<string>("work");
+  const [activeId, setActiveId] = useState<string>("");
   const [coarse, setCoarse] = useState(false);
   const menuRef = useRef<HTMLElement | null>(null);
   const burgerRef = useRef<HTMLButtonElement | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const q = window.matchMedia("(pointer: coarse)");
@@ -28,9 +29,20 @@ export default function Header() {
 
   useEffect(() => {
     if (coarse) return;
-    const ids = NAV.map((item) => item.href.replace(/^#/, ""));
+    
+    // Only scroll spy on home page for hash links
+    if (pathname !== "/") {
+      setActiveId("");
+      return;
+    }
+
+    const ids = NAV.map((item) => {
+      const parts = item.href.split("#");
+      return parts.length > 1 ? parts[1] : null;
+    }).filter(Boolean) as string[];
+
     const pickActive = () => {
-      let current = ids[0] ?? "work";
+      let current = "";
       for (const id of ids) {
         const el = document.getElementById(id);
         if (!el) continue;
@@ -42,7 +54,7 @@ export default function Header() {
     pickActive();
     window.addEventListener("scroll", pickActive, { passive: true });
     return () => window.removeEventListener("scroll", pickActive);
-  }, [coarse]);
+  }, [coarse, pathname]);
 
   // Открытое меню: блокировка прокрутки, Escape, удержание фокуса внутри панели
   useEffect(() => {
@@ -115,8 +127,16 @@ export default function Header() {
           aria-label="Основная навигация"
         >
           {NAV.map((item) => {
-            const id = item.href.replace(/^#/, "");
-            const active = activeId === id;
+            let active = false;
+            if (item.href.startsWith("/#")) {
+              const id = item.href.split("#")[1];
+              active = pathname === "/" && activeId === id;
+            } else if (item.href === "/") {
+              active = pathname === "/";
+            } else {
+              active = pathname.startsWith(item.href);
+            }
+
             return (
               <a
                 key={item.href}
@@ -136,7 +156,7 @@ export default function Header() {
 
         <div className="flex flex-shrink-0 items-center justify-end gap-3">
           <a
-            href="#contact"
+            href="/#contact"
             className="hidden h-9 items-center justify-center rounded-[2px] border border-[var(--site-accent)] px-5 text-[11px] uppercase tracking-[0.08em] text-[var(--site-accent)] transition-all duration-300 hover:lab-accent-bg hover:text-[#080808] active:scale-[0.97] md:inline-flex"
           >
             Получить оценку
@@ -199,7 +219,7 @@ export default function Header() {
             </a>
           ))}
           <a
-            href="#contact"
+            href="/#contact"
             onClick={() => setMenuOpen(false)}
             className="mx-3 mt-6 inline-flex h-11 items-center justify-center rounded-[2px] border border-[var(--site-accent)] text-[12px] uppercase tracking-[0.08em] text-[var(--site-accent)] hover:lab-accent-bg hover:text-[#080808]"
           >
