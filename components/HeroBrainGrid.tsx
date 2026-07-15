@@ -335,12 +335,12 @@ export default function HeroBrainGrid() {
                   initial={noAnim ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   animate={isLoaded || noAnim ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={noAnim ? { duration: 0 } : { delay: 0.58, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                  className="mt-6 max-w-[360px] space-y-3 text-center sm:max-w-[440px] md:mt-9 md:max-w-[615px] md:space-y-4 md:text-left"
+                  className="mt-8 max-w-[360px] space-y-3 text-center sm:max-w-[480px] md:mt-10 md:max-w-[740px] md:space-y-4 md:text-left"
                 >
-                  <p className="text-[15px] leading-[1.65] text-[#cfe3e0] md:text-[19px]">
+                  <p className="text-[17px] leading-[1.45] text-[#e2f0ee] sm:text-[18px] md:text-[clamp(20px,1.55vw,24px)] md:leading-[1.4]">
                     {hero.sub}
                   </p>
-                  <p className="text-[13.5px] leading-[1.65] text-[#aecac5] md:text-[15px] md:leading-[1.7]">
+                  <p className="text-[14.5px] leading-[1.55] text-[#b8d8d3] sm:text-[15px] md:text-[clamp(16px,1.15vw,18px)] md:leading-[1.6]">
                     {hero.sub2}
                   </p>
                 </motion.div>
@@ -349,13 +349,13 @@ export default function HeroBrainGrid() {
                   initial={noAnim ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
                   animate={isLoaded || noAnim ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
                   transition={noAnim ? { duration: 0 } : { delay: 0.8, duration: 0.45 }}
-                  className="mt-8 flex w-full flex-col items-center gap-4 md:mt-11 md:items-start"
+                  className="mt-8 flex w-full flex-col items-center gap-4 md:mt-12 md:items-start"
                 >
                 <div className="flex w-full flex-col items-center justify-center gap-4 sm:w-auto sm:flex-row md:justify-start">
                   <Magnetic strength={22}>
                     <motion.a
                       href={hero.ctaPrimary.href}
-                      className="relative flex w-full sm:inline-flex sm:w-auto h-[52px] overflow-hidden items-center justify-center rounded-sm bg-[#00d4b8] px-8 text-[13px] font-medium tracking-[0.06em] text-[#020c0c] transition hover:scale-[1.02] md:h-[52px] md:px-9"
+                      className="relative flex w-full sm:inline-flex sm:w-auto h-[54px] overflow-hidden items-center justify-center rounded-sm bg-[#00d4b8] px-9 text-[14px] font-semibold tracking-[0.04em] text-[#020c0c] transition hover:scale-[1.02] md:h-[58px] md:px-11 md:text-[15px]"
                       initial={false}
                       animate={
                         noAnim
@@ -389,14 +389,14 @@ export default function HeroBrainGrid() {
                   <Magnetic strength={15}>
                     <a
                       href={hero.ctaSecondary.href}
-                      className="flex w-full sm:inline-flex sm:w-auto h-[52px] items-center justify-center rounded-sm border border-white/15 bg-white/[0.03] backdrop-blur-sm px-8 text-[13px] font-medium tracking-[0.06em] text-white/80 transition-all duration-200 hover:border-[#00d4b8]/40 hover:bg-white/[0.06] hover:text-[#00d4b8] md:px-9"
+                      className="flex w-full sm:inline-flex sm:w-auto h-[54px] items-center justify-center rounded-sm border border-white/15 bg-white/[0.03] backdrop-blur-sm px-9 text-[14px] font-medium tracking-[0.04em] text-white/80 transition-all duration-200 hover:border-[#00d4b8]/40 hover:bg-white/[0.06] hover:text-[#00d4b8] md:h-[58px] md:px-11 md:text-[15px]"
                     >
                       {hero.ctaSecondary.label} →
                     </a>
                   </Magnetic>
                 </div>
 
-                <p className="max-w-[320px] text-center text-[12.5px] leading-[1.6] text-[#a4c4bf] sm:max-w-none md:text-left md:text-[13px]">
+                <p className="max-w-[340px] text-center text-[13px] leading-[1.6] text-[#8fb5af] sm:max-w-none md:text-left md:text-[14px]">
                   {hero.note}
                 </p>
                 </motion.div>
