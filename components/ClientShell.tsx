@@ -22,8 +22,14 @@ function usePointerFine() {
   return ok;
 }
 
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRef, Suspense } from "react";
+
 function SmoothScroll() {
   const { isLoaded } = useLoading();
+  const lenisRef = useRef<Lenis | null>(null);
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -37,6 +43,7 @@ function SmoothScroll() {
       wheelMultiplier: 1,
       touchMultiplier: 2,
     });
+    lenisRef.current = lenis;
 
     if (!isLoaded) {
       lenis.stop();
@@ -53,8 +60,35 @@ function SmoothScroll() {
 
     return () => {
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, [isLoaded]);
+
+  const isPopState = useRef(false);
+
+  useEffect(() => {
+    const onPopState = () => {
+      isPopState.current = true;
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
+  useEffect(() => {
+    // Reset scroll on route change, but wait for next frame to let Next.js and DOM settle
+    requestAnimationFrame(() => {
+      if (isPopState.current) {
+        // It was a Back/Forward navigation. Let native scroll restoration handle it.
+        isPopState.current = false;
+        return;
+      }
+      
+      // Normal navigation. If no hash is present, scroll to top immediately.
+      if (!window.location.hash && lenisRef.current) {
+        lenisRef.current.scrollTo(0, { immediate: true });
+      }
+    });
+  }, [pathname, searchParams]);
 
   return null;
 }
@@ -74,7 +108,9 @@ export default function ClientShell({ children }: { children: ReactNode }) {
   return (
     <LoadingProvider>
       <Preloader />
-      <SmoothScroll />
+      <Suspense fallback={null}>
+        <SmoothScroll />
+      </Suspense>
       <MouseParallaxProvider>
         {labCursorOn ? <HeroLabCursor active /> : null}
         {children}
