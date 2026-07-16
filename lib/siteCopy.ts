@@ -169,6 +169,66 @@ export const pricing = {
   ctaMicrocopy: "Достаточно кратко описать задачу — отвечу лично.",
 };
 
+export type Testimonial = {
+  id: string;
+  name: string;
+  date: string;
+  projectType: string;
+  quote: string;
+  quoteExtended?: string;
+  source: string;
+  featured: boolean;
+};
+
+export const testimonials = {
+  eyebrow: "ОТЗЫВЫ",
+  title: "Ценят не только результат.",
+  titleAccent: "Но и работу над ним.",
+  intro: "Реальные отзывы клиентов о сайтах, коммуникации и ведении проектов.",
+  items: [
+    {
+      id: "t1",
+      name: "Юлия Казимирова",
+      date: "23 мая 2026",
+      projectType: "Сайт-визитка",
+      quote: "Тимур — просто боженька клиентоориентированности",
+      quoteExtended: "Сделал всё именно так, как я представляла, терпеливо доводил до идеала и сделал для меня админку, чтобы я могла самостоятельно добавлять на сайт свои курсы.",
+      source: "Профи.ру",
+      featured: true,
+    },
+    {
+      id: "t2",
+      name: "Орхан",
+      date: "28 июня 2026",
+      projectType: "Корпоративный сайт",
+      quote: "Всё выполнил на высшем уровне, советую!",
+      source: "Профи.ру",
+      featured: false,
+    },
+    {
+      id: "t3",
+      name: "Игорь",
+      date: "7 мая 2026",
+      projectType: "Сайт-визитка",
+      quote: "Оперативность, понимание всех вопросов, ответственность.",
+      source: "Профи.ру",
+      featured: false,
+    },
+    {
+      id: "t4",
+      name: "Александр",
+      date: "6 мая 2026",
+      projectType: "Сайт-визитка",
+      quote: "Тимур выполнил заказ быстро и качественно по всем параметрам, которые я задал. Рекомендую Тимура как ответственного специалиста.",
+      source: "Профи.ру",
+      featured: false,
+    },
+  ] satisfies Testimonial[],
+  profiLinkText: "Смотреть все отзывы на Профи.ру ↗",
+  profiLinkHref: "https://profi.ru/profile/TemirovTK2/share",
+};
+
+
 export type FaqItem = { q: string; a: string };
 
 export const faqs: FaqItem[] = [

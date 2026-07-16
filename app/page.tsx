@@ -12,6 +12,7 @@ import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { FaqSection } from "@/components/FaqSection";
 import { ContactForm } from "@/components/ContactForm";
 import { Footer } from "@/components/Footer";
+import { TestimonialsSection } from "@/components/TestimonialsSection";
 
 export default function Page() {
   return (
@@ -26,6 +27,7 @@ export default function Page() {
       <FounderSection />
       <ProductSection />
       <PricingSection />
+      <TestimonialsSection />
       <FaqSection />
       <ContactForm />
       <Footer />
