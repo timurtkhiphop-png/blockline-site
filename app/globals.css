@@ -306,3 +306,5 @@ html.lenis, html.lenis body {
 .quantum-host > div {
   touch-action: pan-y !important;
 }
+
+html.skip-preloader #global-preloader { display: none !important; }

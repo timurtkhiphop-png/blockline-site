@@ -7,7 +7,7 @@ import { useLoading } from "./LoadingContext";
 
 export function Preloader() {
   const { progress, active } = useProgress();
-  const { isLoaded, setIsLoaded } = useLoading();
+  const { isLoaded, setIsLoaded, hasSeenPreloader } = useLoading();
   const [displayProgress, setDisplayProgress] = useState(0);
   const targetProgress = useRef(0);
 
@@ -56,10 +56,13 @@ export function Preloader() {
     }
   }, [displayProgress, setIsLoaded]);
 
+  if (hasSeenPreloader) return null;
+
   return (
     <AnimatePresence>
       {!isLoaded && (
         <motion.div
+          id="global-preloader"
           key="preloader"
           initial={{ y: 0 }}
           exit={{ y: "-100%" }}
