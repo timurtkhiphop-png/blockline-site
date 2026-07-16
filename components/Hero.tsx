@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef, useMemo, useState, useEffect } from "react";
 import { hero, brand } from "@/lib/content";
+import Link from "next/link";
 import { Magnetic } from "./Magnetic";
 import { useMouseParallax } from "./MouseParallaxProvider";
 
@@ -229,12 +230,12 @@ export function Hero() {
                 <span className="relative z-10">{hero.ctaPrimary.label}</span>
               </motion.a>
             </Magnetic>
-            <a
+            <Link
               href={hero.ctaSecondary.href}
               className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/[0.03] px-6 py-4 text-[15px] text-slate-200 backdrop-blur-sm transition hover:border-cyan-400/35 hover:bg-white/[0.06] md:text-[16px]"
             >
               {hero.ctaSecondary.label}
-            </a>
+            </Link>
           </motion.div>
 
           <motion.div

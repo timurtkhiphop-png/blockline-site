@@ -4,12 +4,11 @@
  */
 
 export const nav = [
-  { label: "Кейсы", href: "/projects" },
-  { label: "Подход", href: "/#process" },
-  { label: "Услуги", href: "/#product" },
-  { label: "Стоимость", href: "/#pricing" },
-  { label: "Вопросы", href: "/#faq" },
-  { label: "Связь", href: "/#contact" },
+  { id: "projects", label: "ПРОЕКТЫ", sectionId: "projects", routeHref: "/projects" },
+  { id: "process", label: "ПОДХОД", sectionId: "process", routeHref: "/#process" },
+  { id: "about", label: "ОБО МНЕ", sectionId: "about", routeHref: "/#about" },
+  { id: "product", label: "УСЛУГИ", sectionId: "product", routeHref: "/#product" },
+  { id: "pricing", label: "СТОИМОСТЬ", sectionId: "pricing", routeHref: "/#pricing" },
 ];
 
 export type ValueFact = {

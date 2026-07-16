@@ -86,7 +86,7 @@ export function FeaturedProjects() {
 
   return (
     <section
-      id="work"
+      id="projects"
       className="relative scroll-mt-24 bg-[var(--site-bg)] px-6 py-20 md:px-12 md:py-28 xl:px-[48px]"
       aria-label="Избранные проекты"
     >
@@ -126,7 +126,7 @@ export function FeaturedProjects() {
             href="/projects"
             className="inline-flex h-12 md:h-14 items-center justify-center whitespace-nowrap rounded-[2px] border border-white/20 bg-white/5 px-8 md:px-10 text-[12px] md:text-[13px] uppercase tracking-[0.08em] text-white transition-all duration-300 hover:border-[var(--site-accent)] hover:bg-[var(--site-accent)] hover:text-[#080808]"
           >
-            Все проекты →
+            Смотреть все проекты →
           </Link>
         </div>
       </div>
