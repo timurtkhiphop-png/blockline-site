@@ -3,10 +3,9 @@ import Header from "@/components/Header";
 import ThreadLine from "@/components/ThreadLine";
 import HeroBrainGrid from "@/components/HeroBrainGrid";
 import { ValueStrip } from "@/components/ValueStrip";
-import { WhySection } from "@/components/WhySection";
-import { OfferSection } from "@/components/OfferSection";
+import { ValueSection } from "@/components/ValueSection";
+import { System820 } from "@/components/System820";
 import { PricingSection } from "@/components/PricingSection";
-import { ProcessSimple } from "@/components/ProcessSimple";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { FaqSection } from "@/components/FaqSection";
 import { ContactForm } from "@/components/ContactForm";
@@ -20,9 +19,8 @@ export default function Page() {
       <HeroBrainGrid />
       <ValueStrip />
       <FeaturedProjects />
-      <WhySection />
-      <OfferSection />
-      <ProcessSimple />
+      <ValueSection />
+      <System820 />
       <PricingSection />
       <FaqSection />
       <ContactForm />
