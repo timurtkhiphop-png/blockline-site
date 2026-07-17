@@ -159,7 +159,7 @@ export function Hero() {
                           ? "inline-block bg-gradient-to-r from-white via-cyan-100 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_32px_rgba(34,211,238,0.35)]"
                           : "inline-block text-white"
                       }
-                      initial={noAnim ? { y: 0, opacity: 1 } : { y: "118%", opacity: 1 }}
+                      initial={noAnim ? { y: 0, opacity: 1 } : { y: 0, opacity: 1 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={
                         noAnim

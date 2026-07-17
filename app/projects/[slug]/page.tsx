@@ -104,14 +104,17 @@ export default async function CasePage({ params }: Props) {
           {/* ── Main Image ── */}
           {c.image && (
             <div className="mb-20 md:mb-32 overflow-hidden rounded-[4px] border border-white/[0.06] bg-[#080808]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={c.image}
-                alt={`Главный экран проекта ${c.title}`}
-                className="w-full h-auto object-cover"
-                loading="eager"
-                decoding="async"
-              />
+              <picture>
+                <source srcSet={c.image.replace(/\.(png|jpe?g)$/i, '.webp')} type="image/webp" />
+                <img
+                  src={c.image}
+                  alt={`Главный экран проекта ${c.title}`}
+                  className="w-full h-auto object-cover"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                />
+              </picture>
             </div>
           )}
 
@@ -190,14 +193,17 @@ export default async function CasePage({ params }: Props) {
             <div className="mb-24 md:mb-40 flex flex-col gap-6 md:gap-10">
               {c.images.map((img, idx) => (
                 <div key={idx} className="overflow-hidden rounded-[4px] border border-white/[0.06] bg-[#080808]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={img}
-                    alt={`Экран проекта ${c.title} ${idx + 1}`}
-                    className="w-full h-auto object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
+                  <picture>
+                    <source srcSet={img.replace(/\.(png|jpe?g)$/i, '.webp')} type="image/webp" />
+                    <img
+                      src={img}
+                      alt={`Экран проекта ${c.title} ${idx + 1}`}
+                      className="w-full h-auto object-cover"
+                      loading="lazy"
+                      fetchPriority="low"
+                      decoding="async"
+                    />
+                  </picture>
                 </div>
               ))}
             </div>
@@ -241,14 +247,17 @@ export default async function CasePage({ params }: Props) {
                 {nextCase.image && (
                   <div className="relative w-full max-w-[800px] overflow-hidden rounded-[4px] border border-white/[0.06] bg-[#080808] transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
                     <div className="aspect-[16/9]">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={nextCase.image}
-                        alt={`Скриншот следующего проекта: ${nextCase.title}`}
-                        className="w-full h-full object-cover object-top opacity-60 transition-opacity duration-500 group-hover:opacity-100"
-                        loading="lazy"
-                        decoding="async"
-                      />
+                      <picture>
+                        <source srcSet={nextCase.image.replace(/\.(png|jpe?g)$/i, '.webp')} type="image/webp" />
+                        <img
+                          src={nextCase.image}
+                          alt={`Скриншот следующего проекта: ${nextCase.title}`}
+                          className="w-full h-full object-cover object-top opacity-60 transition-opacity duration-500 group-hover:opacity-100"
+                          loading="lazy"
+                          fetchPriority="low"
+                          decoding="async"
+                        />
+                      </picture>
                     </div>
                   </div>
                 )}

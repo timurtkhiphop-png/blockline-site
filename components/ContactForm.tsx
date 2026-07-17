@@ -126,17 +126,69 @@ export function ContactForm() {
     >
       <div className="absolute inset-0 bg-[#080a0a] -z-30 hidden motion-reduce:block" aria-hidden="true" />
       <video
+        ref={(el) => {
+          if (!el) return;
+          // IntersectionObserver and Page Visibility logic
+          const handleVisibility = () => {
+            if (document.hidden) {
+              el.pause();
+            } else {
+              const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+              if (!mq.matches && el.dataset.inView === "true") {
+                el.play().catch(() => {});
+              }
+            }
+          };
+
+          if (!el.dataset.observerAttached) {
+            el.dataset.observerAttached = "true";
+            document.addEventListener("visibilitychange", handleVisibility);
+
+            const observer = new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                    el.dataset.inView = "true";
+                    
+                    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+                    const conn = (navigator as any).connection;
+                    const saveData = conn && conn.saveData;
+
+                    if (!mq.matches && !saveData) {
+                      if (!el.src) {
+                        el.src = "/bg-loop.mp4";
+                        el.load();
+                      }
+                      if (!document.hidden) {
+                        el.play().catch(() => {});
+                      }
+                    }
+                  } else {
+                    el.dataset.inView = "false";
+                    el.pause();
+                  }
+                });
+              },
+              { rootMargin: "800px 0px" }
+            );
+            observer.observe(el);
+
+            // Cleanup function attachment (React 19 style)
+            return () => {
+              observer.disconnect();
+              document.removeEventListener("visibilitychange", handleVisibility);
+              delete el.dataset.observerAttached;
+            };
+          }
+        }}
         className="pointer-events-none absolute inset-0 -z-30 h-full w-full object-cover object-[20%_center] lg:object-[30%_center] select-none motion-reduce:hidden"
-        autoPlay
         loop
         muted
         playsInline
-        preload="metadata"
+        preload="none"
         aria-hidden="true"
         tabIndex={-1}
-      >
-        <source src="/bg-loop.mp4" type="video/mp4" />
-      </video>
+      />
 
       {/* Слой 1: Равномерное затемнение */}
       <div className="pointer-events-none absolute inset-0 -z-20 bg-black/40" aria-hidden="true" />

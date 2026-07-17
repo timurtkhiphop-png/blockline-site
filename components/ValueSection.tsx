@@ -37,7 +37,7 @@ export function ValueSection() {
               <div
                 key={i}
                 data-reveal
-                className="group relative border-t border-[var(--site-border)] pt-5 transition-[border-color] duration-300 hover:border-[var(--site-accent)] md:pt-8"
+                className="group relative border-t border-[var(--site-border)] pt-5 transition-[border-color] duration-300 hover:border-[var(--site-accent)] md:pt-8 touch-pan-y"
               >
                 <div className="flex gap-4 md:gap-6">
                   {/* Number marker */}

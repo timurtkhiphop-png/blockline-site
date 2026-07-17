@@ -31,15 +31,18 @@ function FlagshipCase({ c }: { c: Case }) {
         <Link href={url} className="relative lg:col-span-8 block overflow-hidden">
           <div className="aspect-[16/9] lg:aspect-auto lg:h-full lg:min-h-[520px]">
             {c.image && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={c.image}
-                alt={c.title ? `Скриншот сайта: ${c.title}` : ""}
-                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                style={{ objectPosition: "center" }}
-                loading="eager"
-                decoding="async"
-              />
+              <picture>
+                <source srcSet={c.image.replace(/\.(png|jpe?g)$/i, '.webp')} type="image/webp" />
+                <img
+                  src={c.image}
+                  alt={c.title ? `Скриншот сайта: ${c.title}` : ""}
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  style={{ objectPosition: "center" }}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                />
+              </picture>
             )}
           </div>
         </Link>
@@ -104,15 +107,18 @@ function EditorialCase({ c, reversed = false }: { c: Case; reversed?: boolean })
         >
           <div className="aspect-[16/9]">
             {c.image && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={c.image}
-                alt={c.title ? `Скриншот сайта: ${c.title}` : ""}
-                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                style={{ objectPosition: "center top" }}
-                loading="lazy"
-                decoding="async"
-              />
+              <picture>
+                <source srcSet={c.image.replace(/\.(png|jpe?g)$/i, '.webp')} type="image/webp" />
+                <img
+                  src={c.image}
+                  alt={c.title ? `Скриншот сайта: ${c.title}` : ""}
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  style={{ objectPosition: "center top" }}
+                  loading="lazy"
+                  fetchPriority="low"
+                  decoding="async"
+                />
+              </picture>
             )}
           </div>
         </Link>
@@ -175,14 +181,17 @@ function SecondaryCard({ c }: { c: Case }) {
       >
         <div className="aspect-[16/9]">
           {c.image && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={c.image}
-              alt={c.title ? `Скриншот сайта: ${c.title}` : ""}
-              className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-              loading="lazy"
-              decoding="async"
-            />
+            <picture>
+              <source srcSet={c.image.replace(/\.(png|jpe?g)$/i, '.webp')} type="image/webp" />
+              <img
+                src={c.image}
+                alt={c.title ? `Скриншот сайта: ${c.title}` : ""}
+                className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                loading="lazy"
+                fetchPriority="low"
+                decoding="async"
+              />
+            </picture>
           )}
         </div>
       </Link>

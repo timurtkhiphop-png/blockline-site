@@ -14,7 +14,7 @@ export function Preloader() {
   useEffect(() => {
     let rAF: number;
     const start = performance.now();
-    const minDuration = 1500; // Minimum 1.5 seconds loading screen
+    const minDuration = 400; // Minimum 400ms loading screen
 
     const update = () => {
       const elapsed = performance.now() - start;
@@ -51,7 +51,7 @@ export function Preloader() {
     if (displayProgress === 100) {
       const timeout = setTimeout(() => {
         setIsLoaded(true);
-      }, 200); // short beat at 100%
+      }, 50); // short beat at 100%
       return () => clearTimeout(timeout);
     }
   }, [displayProgress, setIsLoaded]);
@@ -65,8 +65,8 @@ export function Preloader() {
           id="global-preloader"
           key="preloader"
           initial={{ y: 0 }}
-          exit={{ y: "-100%" }}
-          transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+          exit={{ y: "-100%", pointerEvents: "none" }}
+          transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
           className="fixed inset-0 z-[999] flex flex-col items-center justify-center bg-[#020c0c] text-white overflow-hidden touch-none"
         >
           <div className="flex flex-col items-center justify-center gap-6 relative z-10">

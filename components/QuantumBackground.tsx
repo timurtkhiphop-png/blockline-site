@@ -255,10 +255,15 @@ type QuantumProps = {
 
 export function QuantumBackground({ className, parentRef, swellStateRef, interactive = true }: QuantumProps) {
   const reduceMotion = useReducedMotion();
+  const [isCoarse, setIsCoarse] = useState(false);
+  useEffect(() => {
+    setIsCoarse(typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches);
+  }, []);
+
   return (
     <div
       ref={parentRef}
-      className={["quantum-host absolute inset-0 z-0", interactive ? "pointer-events-auto" : "pointer-events-none", className].filter(Boolean).join(" ")}
+      className={["quantum-host absolute inset-0 z-0", (interactive && !isCoarse) ? "pointer-events-auto" : "pointer-events-none", className].filter(Boolean).join(" ")}
       style={{ minHeight: "100dvh" }}
     >
       <Canvas

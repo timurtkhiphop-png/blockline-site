@@ -14,6 +14,7 @@ import {
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { useTouch } from "@/hooks/useTouch";
 import { hero, brand } from "@/lib/content";
 import { createInitialHeroSwellState, type HeroSwellState } from "@/components/heroSwellState";
 import { Magnetic } from "@/components/Magnetic";
@@ -97,14 +98,15 @@ function usePointerFine() {
 
 function useLightweightHero() {
   const [lightweight, setLightweight] = useState(false);
+  const isTouch = useTouch();
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const mq = window.matchMedia("(max-width: 900px), (pointer: coarse)");
-    const fn = () => setLightweight(mq.matches);
+    const mq = window.matchMedia("(max-width: 900px)");
+    const fn = () => setLightweight(mq.matches || isTouch);
     fn();
     mq.addEventListener("change", fn);
     return () => mq.removeEventListener("change", fn);
-  }, []);
+  }, [isTouch]);
   return lightweight;
 }
 
@@ -133,7 +135,8 @@ export default function HeroBrainGrid() {
   const textScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
 
   const wordDelay = 0.06;
-  const noAnim = reduced || lightweightHero;
+  const isTouch = useTouch();
+  const noAnim = reduced || lightweightHero || isTouch;
 
   const wordGrid = useMemo(() => {
     let gi = 0;
@@ -177,7 +180,7 @@ export default function HeroBrainGrid() {
   }, [reduced, lightweightHero]);
 
   useLayoutEffect(() => {
-    if (lightweightHero || !heroRef.current) return;
+    if (lightweightHero || isTouch || !heroRef.current) return;
     const el = heroRef.current;
     const st = ScrollTrigger.create({
       trigger: el,
@@ -196,8 +199,9 @@ export default function HeroBrainGrid() {
   }, [lightweightHero]);
 
   useLayoutEffect(() => {
+    if (lightweightHero || isTouch) return;
     requestAnimationFrame(() => ScrollTrigger.refresh());
-  }, [lightweightHero]);
+  }, [lightweightHero, isTouch]);
 
   useEffect(() => {
     const el = heroRef.current;

@@ -3,17 +3,19 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTouch } from "@/hooks/useTouch";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ThreadLine() {
   const pathRef = useRef<SVGPathElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+  const isTouch = useTouch();
 
   useEffect(() => {
     const path = pathRef.current;
     const svg = svgRef.current;
-    if (!path || !svg) return;
+    if (!path || !svg || isTouch) return;
 
     const updateSize = () => {
       const h = Math.max(

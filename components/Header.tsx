@@ -19,6 +19,7 @@ export default function Header() {
   const [scrollY, setScrollY] = useState(0);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigatingRef = useRef(false);
 
   const menuRef = useRef<HTMLElement | null>(null);
   const burgerRef = useRef<HTMLButtonElement | null>(null);
@@ -112,15 +113,21 @@ export default function Header() {
   };
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, sectionId: string) => {
+    navigatingRef.current = true;
     setMenuOpen(false);
     if (isHomePage && href.startsWith("#")) {
       e.preventDefault();
-      const el = document.getElementById(sectionId);
-      if (el) {
-        const y = el.getBoundingClientRect().top + window.scrollY - 90;
-        window.scrollTo({ top: y, behavior: "smooth" });
-        history.pushState("", document.title, window.location.pathname + "#" + sectionId);
-      }
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const y = el.getBoundingClientRect().top + window.scrollY - 90;
+          window.scrollTo({ top: y, behavior: "auto" });
+          history.pushState("", document.title, window.location.pathname + "#" + sectionId);
+        }
+        setTimeout(() => { navigatingRef.current = false; }, 100);
+      }, 50);
+    } else {
+      setTimeout(() => { navigatingRef.current = false; }, 100);
     }
   };
 
@@ -168,10 +175,14 @@ export default function Header() {
         body.style.top = "";
         body.style.width = "";
         body.style.overflow = "";
-        window.scrollTo(0, scrolledY);
+        if (!navigatingRef.current) {
+          window.scrollTo(0, scrolledY);
+        }
         html.style.scrollBehavior = "";
         document.removeEventListener("keydown", onKeyDown);
-        burgerRef.current?.focus({ preventScroll: true });
+        if (!navigatingRef.current) {
+          burgerRef.current?.focus({ preventScroll: true });
+        }
       };
     }
   }, [menuOpen]);
@@ -385,7 +396,7 @@ export default function Header() {
                   href={href}
                   onClick={(e) => handleNavClick(e, href, item.sectionId)}
                   aria-current={ariaCurrent}
-                  className="group flex items-start gap-5 cursor-pointer py-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--site-accent)]"
+                  className="group flex items-start gap-5 cursor-pointer py-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--site-accent)] touch-manipulation"
                 >
                   <span style={{ fontFamily: "var(--font-mono)" }} className={`text-[13px] mt-2 transition-colors ${active ? "lab-accent-text" : "text-white/30 group-hover:text-white/50"}`}>
                     {num}
@@ -402,8 +413,12 @@ export default function Header() {
           <div className="mt-12 flex flex-col gap-8 shrink-0 pb-8">
             <Link
               href="/#contact"
-              onClick={() => setMenuOpen(false)}
-              className="flex h-[64px] w-full items-center justify-center gap-3 border border-white/10 bg-[var(--site-accent)] text-[14px] font-medium uppercase tracking-[0.1em] text-[#050606] transition-all hover:bg-[var(--site-accent)]/90 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--site-accent)]"
+              onClick={() => {
+                navigatingRef.current = true;
+                setMenuOpen(false);
+                setTimeout(() => { navigatingRef.current = false; }, 100);
+              }}
+              className="flex h-[64px] w-full items-center justify-center gap-3 border border-white/10 bg-[var(--site-accent)] text-[14px] font-medium uppercase tracking-[0.1em] text-[#050606] transition-all hover:bg-[var(--site-accent)]/90 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--site-accent)] touch-manipulation"
             >
               ОБСУДИТЬ ПРОЕКТ
               <span className="font-mono text-[16px]">→</span>

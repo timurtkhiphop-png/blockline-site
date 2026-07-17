@@ -34,6 +34,12 @@ function SmoothScroll() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     
+    // Disable Lenis entirely on touch devices to rely on native scroll and fix sticky scroll bugs
+    const isTouch = window.matchMedia("(pointer: coarse)").matches || navigator.maxTouchPoints > 0;
+    if (isTouch) {
+      return;
+    }
+    
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -51,14 +57,16 @@ function SmoothScroll() {
       lenis.start();
     }
 
+    let rafId: number;
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
       lenisRef.current = null;
     };
@@ -84,8 +92,12 @@ function SmoothScroll() {
       }
       
       // Normal navigation. If no hash is present, scroll to top immediately.
-      if (!window.location.hash && lenisRef.current) {
-        lenisRef.current.scrollTo(0, { immediate: true });
+      if (!window.location.hash) {
+        if (lenisRef.current) {
+          lenisRef.current.scrollTo(0, { immediate: true });
+        } else {
+          window.scrollTo(0, 0);
+        }
       }
     });
   }, [pathname, searchParams]);

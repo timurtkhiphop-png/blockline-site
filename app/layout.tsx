@@ -6,6 +6,8 @@ import { ScrollProgress } from "@/components/ScrollProgress";
 import { brand } from "@/lib/content";
 
 
+
+
 export const metadata: Metadata = {
   metadataBase: new URL(`https://${brand.domain}`),
   title: {
@@ -58,7 +60,21 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{if(sessionStorage.getItem('820lab-preloader-seen')==='1'){document.documentElement.classList.add('skip-preloader');}}catch(e){}`,
+            __html: `try{if(sessionStorage.getItem('820lab-preloader-seen')==='1'){document.documentElement.classList.add('skip-preloader');}}catch(e){}
+              window.rafTotal = 0;
+              const origRaf = window.requestAnimationFrame;
+              window.requestAnimationFrame = function(cb) {
+                window.rafTotal++;
+                return origRaf.call(window, cb);
+              };
+              setInterval(() => {
+                const div = document.getElementById('raf-counter');
+                if(div) {
+                  div.innerText = 'RAF/sec: ' + window.rafTotal;
+                }
+                window.rafTotal = 0;
+              }, 1000);
+            `,
           }}
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -73,6 +89,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ClientShell>
+          <div id="raf-counter" style={{position:'fixed', top:0, left:0, zIndex:9999, background:'red', color:'white', padding:'10px', fontSize:'20px'}}>RAF/sec: 0</div>
           <div
             aria-hidden
             className="pointer-events-none fixed inset-0 z-0 grid-bg opacity-[0.18] mask-fade-b"

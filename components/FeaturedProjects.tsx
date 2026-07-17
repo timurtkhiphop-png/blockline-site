@@ -17,15 +17,18 @@ function FeaturedCase({ c, index }: { c: Case, index: number }) {
       >
         <div className="aspect-[16/9]">
           {c.image && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={c.image}
-              alt={c.title ? `Скриншот сайта: ${c.title}` : ""}
-              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-              style={{ objectPosition: "center top" }}
-              loading={index === 0 ? "eager" : "lazy"}
-              decoding="async"
-            />
+            <picture>
+              <source srcSet={c.image.replace(/\.(png|jpe?g)$/i, '.webp')} type="image/webp" />
+              <img
+                src={c.image}
+                alt={c.title ? `Скриншот сайта: ${c.title}` : ""}
+                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                style={{ objectPosition: "center top" }}
+                loading={index === 0 ? "eager" : "lazy"}
+                fetchPriority={index === 0 ? "high" : "low"}
+                decoding="async"
+              />
+            </picture>
           )}
         </div>
       </Link>
